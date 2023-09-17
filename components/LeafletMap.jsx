@@ -13,7 +13,7 @@ const dhakaLatLang = [23.762, 90.3899];
 
 const MapControls = (props) => {
     const map = useMap();
-    map.flyTo(props.position);
+    map.setView(props.position);
     return null;
 }
 
