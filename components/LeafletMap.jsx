@@ -3,6 +3,11 @@
 import React, { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import "leaflet/dist/leaflet.css";
+import L from 'leaflet';
+const myIcon = new L.Icon({
+ iconUrl: '/marker_red.png',
+ iconSize: [32,32]
+})
 
 const dhakaLatLang = [23.762, 90.3899];
 
@@ -28,7 +33,7 @@ const LeafletMap = () => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <Marker position={position}>
+                <Marker position={position} icon={myIcon} >
                     <Popup>
                         A pretty CSS3 popup. <br /> Easily customizable.
                     </Popup>
