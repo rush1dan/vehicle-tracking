@@ -21,14 +21,19 @@ async function getReverseGeoCoding(lat, lon) {
 }
 
 const Address = (props) => {
-    // const [address, setAddress] = useState(default_address);
-    // useEffect(async () => {
-    //     const location = await getReverseGeoCoding(props.data.lat, props.data.lon);
-    //     setAddress(location);
-    // }, [props.data]);
+    const [address, setAddress] = useState(`Latitude: ${props.data.lat}, Longitude: ${props.data.lon}`);
+    useEffect(() => {
+        if (props.selected) {
+            const fetchLocation = async () => {
+                const location = await getReverseGeoCoding(props.data.lat, props.data.lon);
+                setAddress(location);
+            }
+            fetchLocation();
+        }
+    }, [props.selected]);
     return (
         <p className={props.className}>
-            Latitude: {props.data.lat}, Longitude: {props.data.lon}
+            {address}
         </p>
     )
 }
