@@ -8,8 +8,8 @@ const LivePage = () => {
     return (
         <div className='w-full h-full'>
             <div className='w-full h-full flex flex-row items-start justify-start'>
-                <LiveFeed className={'w-96 h-full'} />
-                <LeafletMap className={'w-[calc(100%-24rem)] h-full'} />
+                <LiveFeed className={'w-[28rem] h-full'} />
+                <LeafletMap className={'w-[calc(100%-28rem)] h-full'} />
             </div>
         </div>
     )
