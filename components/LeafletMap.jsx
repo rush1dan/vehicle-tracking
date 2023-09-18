@@ -24,11 +24,9 @@ const MapControls = (props) => {
     return null;
 }
 
-const positions = [];
-
 const LeafletMap = (props) => {
     const [isMounted, setIsMounted] = useState(false);
-    const [vehicles, setVehicles] = useState([]);
+
     useEffect(() => {
         setIsMounted(true);
     }, []);
@@ -43,7 +41,7 @@ const LeafletMap = (props) => {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 {
-                    vehicles.map((vehicle, index) => {
+                    props.vehicles.map((vehicle, index) => {
                         return (
                             <Marker key={index} position={[vehicle.lat, vehicle.lon]} icon={vehicle.status == 'moving' ? myGreenIcon : myRedIcon}
                                 eventHandlers={{
@@ -58,20 +56,7 @@ const LeafletMap = (props) => {
                         )
                     })
                 }
-                {/* <Marker position={position} icon={myIcon} >
-                    <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
-                    </Popup>
-                </Marker> */}
-                {/* <MapControls position={position} /> */}
             </MapContainer>
-            <button onClick={() => setVehicles(
-                (current) => {
-                    return [...current, vehicle_data[current.length]];
-                }
-            )} className='px-4 py-2 bg-slate-500 text-white absolute z-[10000] bottom-10 right-10'>
-                Add
-            </button>
         </div>
     )
 }
