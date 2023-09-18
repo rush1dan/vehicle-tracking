@@ -51,7 +51,6 @@ const LeafletMap = (props) => {
                             <Marker key={index} position={markerPos} icon={vehicle.status == 'moving' ? myGreenIcon : myRedIcon}
                                 eventHandlers={{
                                     click: () => {
-                                        console.log(`${vehicle.model}`);
                                         setViewPos(markerPos);
                                     },
                                 }}>
