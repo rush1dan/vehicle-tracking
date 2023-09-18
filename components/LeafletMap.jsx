@@ -17,7 +17,7 @@ const MapControls = (props) => {
     return null;
 }
 
-const LeafletMap = () => {
+const LeafletMap = (props) => {
     const [isMounted, setIsMounted] = useState(false);
     const [position, setPosition] = useState([51.505, -0.09]);
     useEffect(() => {
@@ -27,8 +27,8 @@ const LeafletMap = () => {
         return null;
     }
     return (
-        <>
-            <MapContainer center={position} zoom={13} scrollWheelZoom={true} className='w-full h-96'>
+        <div className={`${props.className} relative`}>
+            <MapContainer center={position} zoom={13} scrollWheelZoom={true} className='w-full h-full'>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -40,10 +40,10 @@ const LeafletMap = () => {
                 </Marker>
                 <MapControls position={position} />
             </MapContainer>
-            <button onClick={() => setPosition(dhakaLatLang)} className='px-4 py-2 bg-slate-500 text-white mt-4'>
+            <button onClick={() => setPosition(dhakaLatLang)} className='px-4 py-2 bg-slate-500 text-white absolute z-[10000] bottom-10 right-10'>
                 Dhaka
             </button>
-        </>
+        </div>
     )
 }
 

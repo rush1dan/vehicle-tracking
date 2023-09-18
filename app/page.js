@@ -1,11 +1,10 @@
-import dynamic from "next/dynamic";
+import { LivePage } from '@/pages'
 
-const LeafletMap = dynamic(() => import("@/components/LeafletMap"), { ssr: false });
 
 export default function Home() {
 	return (
 		<main className="w-full h-full">
-			<LeafletMap />
+			<LivePage />
 		</main>
 	)
 }

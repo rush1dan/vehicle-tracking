@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Topbar = () => {
+const Topbar = (props) => {
     return (
-        <div className='w-screen h-16 bg-blue-600'>
+        <div className={props.className}>
 
         </div>
     )

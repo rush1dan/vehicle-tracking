@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Sidebar = () => {
+const Sidebar = (props) => {
     return (
-        <div className='w-32 h-full bg-blue-700/50'>
+        <div className={props.className}>
 
         </div>
     )
