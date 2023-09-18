@@ -19,13 +19,15 @@ const myGreenIcon = new L.Icon({
 const dhakaLatLang = [23.762, 90.3899];
 
 const MapControls = (props) => {
-    const map = useMap();
-    map.setView(props.position);
-    return null;
+    if (props.position.length > 0) {
+        const map = useMap();
+        map.flyTo(props.position);
+    }
 }
 
 const LeafletMap = (props) => {
     const [isMounted, setIsMounted] = useState(false);
+    const [viewPos, setViewPos] = useState([]);
 
     useEffect(() => {
         setIsMounted(true);
@@ -33,6 +35,8 @@ const LeafletMap = (props) => {
     if (!isMounted) {
         return null;
     }
+
+
     return (
         <div className={`${props.className} relative`}>
             <MapContainer center={dhakaLatLang} zoom={13} scrollWheelZoom={true} className='w-full h-full'>
@@ -42,11 +46,13 @@ const LeafletMap = (props) => {
                 />
                 {
                     props.vehicles.map((vehicle, index) => {
+                        const markerPos = [vehicle.lat, vehicle.lon];
                         return (
-                            <Marker key={index} position={[vehicle.lat, vehicle.lon]} icon={vehicle.status == 'moving' ? myGreenIcon : myRedIcon}
+                            <Marker key={index} position={markerPos} icon={vehicle.status == 'moving' ? myGreenIcon : myRedIcon}
                                 eventHandlers={{
                                     click: () => {
                                         console.log(`${vehicle.model}`);
+                                        setViewPos(markerPos);
                                     },
                                 }}>
                                 <Popup>
@@ -56,6 +62,7 @@ const LeafletMap = (props) => {
                         )
                     })
                 }
+                <MapControls position={viewPos} />
             </MapContainer>
         </div>
     )
