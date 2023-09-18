@@ -45,9 +45,14 @@ const LeafletMap = (props) => {
                 {
                     vehicles.map((vehicle, index) => {
                         return (
-                            <Marker key={index} position={[vehicle.lat, vehicle.lon]} icon={vehicle.status == 'moving' ? myGreenIcon : myRedIcon} >
+                            <Marker key={index} position={[vehicle.lat, vehicle.lon]} icon={vehicle.status == 'moving' ? myGreenIcon : myRedIcon}
+                                eventHandlers={{
+                                    click: () => {
+                                        console.log(`${vehicle.model}`);
+                                    },
+                                }}>
                                 <Popup>
-                                    {vehicle.model} <br/> {vehicle.id}
+                                    {vehicle.model} <br /> {vehicle.id}
                                 </Popup>
                             </Marker>
                         )
