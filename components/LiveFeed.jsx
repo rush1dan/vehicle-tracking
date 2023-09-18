@@ -10,7 +10,7 @@ const LiveFeed = (props) => {
                     vehicle_data.map((data) => {
                         return (
                             <div key={data.id} className='w-full'>
-                                <LiveFeedCard className={'w-full h-24'} data={data} />
+                                <LiveFeedCard className={'w-full h-20'} data={data} />
                             </div>
                         )
                     })

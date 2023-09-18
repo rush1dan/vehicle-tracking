@@ -1,6 +1,6 @@
 const vehicle_data = [
     {
-        "id": "1a2b3c4d",
+        "id": "ঢাকা মেট্রো - গ - ১২৩৪",
         "lat": 23.8103,
         "long": 90.4125,
         "status": "idle",
@@ -9,7 +9,7 @@ const vehicle_data = [
         "model": "Toyota Corolla"
     },
     {
-        "id": "5e6f7g8h",
+        "id": "ঢাকা মেট্রো - ক - ৫৬৭৮",
         "lat": 23.7925,
         "long": 90.4078,
         "status": "moving",
@@ -18,7 +18,7 @@ const vehicle_data = [
         "model": "Volvo XC90"
     },
     {
-        "id": "9i0j1k2l",
+        "id": "ঢাকা মেট্রো - ঘ - ৯০১২",
         "lat": 23.7639,
         "long": 90.4133,
         "status": "idle",
@@ -27,7 +27,7 @@ const vehicle_data = [
         "model": "Ford F-150"
     },
     {
-        "id": "3m4n5o6p",
+        "id": "ঢাকা মেট্রো - খ - ৩৪৫৬",
         "lat": 23.7540,
         "long": 90.3660,
         "status": "moving",
@@ -36,7 +36,7 @@ const vehicle_data = [
         "model": "Honda Civic"
     },
     {
-        "id": "7q8r9s0t",
+        "id": "ঢাকা মেট্রো - চ - ৭৮৯০",
         "lat": 23.7465,
         "long": 90.3760,
         "status": "idle",
@@ -45,7 +45,7 @@ const vehicle_data = [
         "model": "Mercedes-Benz Sprinter"
     },
     {
-        "id": "u1v2w3x4y",
+        "id": "ঢাকা মেট্রো - গ - ২৯৪৫",
         "lat": 23.7375,
         "long": 90.4133,
         "status": "moving",
@@ -54,7 +54,7 @@ const vehicle_data = [
         "model": "Chevrolet Silverado"
     },
     {
-        "id": "z5a6b7c8d",
+        "id": "ঢাকা মেট্রো - ঙ - ৫৪৩২",
         "lat": 23.7558,
         "long": 90.3577,
         "status": "idle",
@@ -63,7 +63,7 @@ const vehicle_data = [
         "model": "Nissan Altima"
     },
     {
-        "id": "e9f0g1h2i",
+        "id": "ঢাকা মেট্রো - ক - ৬৫৪৩",
         "lat": 23.7895,
         "long": 90.4028,
         "status": "moving",
@@ -72,7 +72,7 @@ const vehicle_data = [
         "model": "Ford Transit"
     },
     {
-        "id": "j3k4l5m6n",
+        "id": "ঢাকা মেট্রো - গ - ৭৬৫৪",
         "lat": 23.7712,
         "long": 90.4115,
         "status": "idle",
@@ -81,7 +81,7 @@ const vehicle_data = [
         "model": "Chevrolet Colorado"
     },
     {
-        "id": "o7p8q9r0s",
+        "id": "ঢাকা মেট্রো - চ - ৮৭৬৫",
         "lat": 23.7974,
         "long": 90.3549,
         "status": "moving",
