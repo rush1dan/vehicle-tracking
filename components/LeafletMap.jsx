@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import "leaflet/dist/leaflet.css";
 import L from 'leaflet';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectVehicle } from '@/redux/selectedVehicleSlice';
 
 const myRedIcon = new L.Icon({
     iconUrl: '/marker_red.png',
@@ -37,6 +38,12 @@ const LeafletMap = (props) => {
         }
     }, [selectedVehicle]);
 
+    const dispatch = useDispatch();
+    function clickVehicle(vehicle_data, position) {
+        setViewPos(position);
+        dispatch(selectVehicle(vehicle_data));
+    }
+
 
     useEffect(() => {
         setIsMounted(true);
@@ -60,7 +67,7 @@ const LeafletMap = (props) => {
                             <Marker key={index} position={markerPos} icon={vehicle.status == 'moving' ? myGreenIcon : myRedIcon}
                                 eventHandlers={{
                                     click: () => {
-                                        setViewPos(markerPos);
+                                        clickVehicle({ index: index, id: vehicle.id }, markerPos);
                                     },
                                 }}>
                                 <Popup>
