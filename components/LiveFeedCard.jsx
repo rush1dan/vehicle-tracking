@@ -1,8 +1,5 @@
 import React from 'react'
-
-async function getLocation(lat, long) {
-
-}
+import Address from './Address'
 
 const LiveFeedCard = (props) => {
     return (
@@ -14,7 +11,7 @@ const LiveFeedCard = (props) => {
                     <div className='grow flex flex-col justify-between items-start'>
                         <p>{props.data.model}</p>
                         <p>{props.data.id}</p>
-                        <p>{props.data.lat}</p>
+                        <Address className={'text-xs'} data={{lat: props.data.lat, lon: props.data.lon}} />
                     </div>
                     <div className='h-full flex flex-col justify-start items-center'>
                         <div className={`w-16 h-6 rounded-md flex justify-center items-center ${props.data.status == 'moving' ? 'bg-green-300' : 'bg-red-300'}`}>

@@ -1,4 +1,4 @@
-import { LivePage } from '@/pages'
+import LivePage from "@/pages/LivePage"
 
 
 export default function Home() {
