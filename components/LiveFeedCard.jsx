@@ -1,10 +1,17 @@
+'use client'
+
 import React from 'react'
 import Address from './Address'
+import { useDispatch } from 'react-redux'
+import { selectVehicle } from '@/redux/selectedVehicleSlice'
 
 const LiveFeedCard = (props) => {
+    const dispatch = useDispatch();
+
     return (
         <div className={props.className}>
-            <div className='w-full h-full bg-slate-100 shadow-md shadow-slate-900/10 rounded-md p-2'>
+            <div className='w-full h-full bg-slate-100 shadow-md shadow-slate-900/10 rounded-md p-2 cursor-pointer hover:ring-2'
+                 onClick={() => dispatch(selectVehicle({index: props.index, id: props.data.id}))}>
                 <div className='w-full h-full flex flex-row items-center justify-between gap-x-4'>
                     <div className='h-3/4 aspect-square rounded-md bg-slate-400'>
                     </div>
