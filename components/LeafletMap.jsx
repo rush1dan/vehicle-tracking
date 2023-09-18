@@ -47,7 +47,7 @@ const LeafletMap = (props) => {
                         return (
                             <Marker key={index} position={[vehicle.lat, vehicle.lon]} icon={vehicle.status == 'moving' ? myGreenIcon : myRedIcon} >
                                 <Popup>
-                                    A pretty CSS3 popup. <br /> Easily customizable.
+                                    {vehicle.model} <br/> {vehicle.id}
                                 </Popup>
                             </Marker>
                         )
