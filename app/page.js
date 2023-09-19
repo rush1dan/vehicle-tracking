@@ -1,10 +1,10 @@
-import LivePage from "@/pages/LivePage"
+import PageLoader from "@/pages/PageLoader"
 
 
 export default function Home() {
 	return (
 		<main className="w-full h-full">
-			<LivePage />
+			<PageLoader className='w-full h-full' />
 		</main>
 	)
 }
