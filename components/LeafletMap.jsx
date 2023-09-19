@@ -19,14 +19,14 @@ const myGreenIcon = new L.Icon({
 
 const dhakaLatLang = [23.762, 90.3899];
 
-const MapControls = (props) => {
-    if (props.position.length > 0) {
+const MapControls = ({ position }) => {
+    if (position.length > 0) {
         const map = useMap();
-        map.flyTo(props.position);
+        map.flyTo(position);
     }
 }
 
-const LeafletMap = (props) => {
+const LeafletMap = ({ className, vehicles }) => {
     const [isMounted, setIsMounted] = useState(false);
     const [viewPos, setViewPos] = useState([]);
 
@@ -56,14 +56,14 @@ const LeafletMap = (props) => {
 
 
     return (
-        <div className={`${props.className} relative`}>
+        <div className={`${className} relative`}>
             <MapContainer center={dhakaLatLang} zoom={13} scrollWheelZoom={true} className='w-full h-full'>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 {
-                    props.vehicles.map((vehicle, index) => {
+                    vehicles.map((vehicle, index) => {
                         const markerPos = [vehicle.lat, vehicle.lon];
                         return (
                             <Marker key={index} position={markerPos} icon={vehicle.status == 'moving' ? myGreenIcon : myRedIcon}

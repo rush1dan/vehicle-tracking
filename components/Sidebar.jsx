@@ -1,9 +1,9 @@
 import React from 'react'
 import NavButton from './NavButton'
 
-const Sidebar = (props) => {
+const Sidebar = ({ className }) => {
     return (
-        <div className={props.className}>
+        <div className={className}>
             <div className='w-full h-full flex flex-col items-center justify-start bg-blue-600'>
                 <div className='w-full h-4'></div>
                 <NavButton classname={'w-full h-32'} title={'Dashboard'} iconSrc={'/dashboard.svg'} />

@@ -6,11 +6,11 @@ import LivePage from './LivePage';
 import DashboardPage from './DashboardPage';
 import SettingsPage from './SettingsPage';
 
-const PageLoader = (props) => {
+const PageLoader = ({ className }) => {
     const selectedPage = useSelector((state) => state.selectedPage);
 
     return (
-        <div className={props.className}>
+        <div className={className}>
             {
                 selectedPage.value === 'Dashboard' &&
                 <DashboardPage />

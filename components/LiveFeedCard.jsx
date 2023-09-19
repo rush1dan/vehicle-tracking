@@ -5,7 +5,7 @@ import Address from './Address'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectVehicle } from '@/redux/selectedVehicleSlice'
 
-const LiveFeedCard = ({className, vehicle}) => {
+const LiveFeedCard = ({ className, vehicle }) => {
     const dispatch = useDispatch();
     const selectedVehicle = useSelector((state) => state.selectedVehicle);
     const [isSelected, setIsSelected] = useState(false);
@@ -32,7 +32,7 @@ const LiveFeedCard = ({className, vehicle}) => {
                     <div className='grow flex flex-col justify-between items-start'>
                         <p>{vehicle.model}</p>
                         <p>{vehicle.id}</p>
-                        <Address className={'text-xs'} data={{ lat: vehicle.lat, lon: vehicle.lon }} selected={isSelected} />
+                        <Address className={'text-xs'} latlondata={{ lat: vehicle.lat, lon: vehicle.lon }} selected={isSelected} />
                     </div>
                     <div className='h-full flex flex-col justify-start items-center'>
                         <div className={`w-16 h-6 rounded-md flex justify-center items-center ${vehicle.status == 'moving' ? 'bg-green-300' : 'bg-red-300'}`}>

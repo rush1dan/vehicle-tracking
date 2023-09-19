@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectTab } from '@/redux/selectedTabSlice'
 import VehicleCard from './VehicleCard'
 
-const LiveFeed = (props) => {
+const LiveFeed = ({ className }) => {
     const selectedTab = useSelector((state) => state.selectedTab);
     const selectedVehicle = useSelector((state) => state.selectedVehicle);
 
@@ -18,7 +18,7 @@ const LiveFeed = (props) => {
     const vehicleList = selectedTab.value === 'All Vehicles' ? allVehicles : (selectedTab.value === 'Moving' ? movingVehicles : idleVehicles);
 
     return (
-        <div className={props.className}>
+        <div className={className}>
             <div className='w-full h-full'>
                 <Tabs className={'w-full h-24'} allVehicleCount={allVehicles.length} movingVehicleCount={movingVehicles.length}
                     idleVehicleCount={idleVehicles.length} selectedVehicleCount={selectedVehicle.id ? 1 : 0} />
