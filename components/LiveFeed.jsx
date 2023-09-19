@@ -29,7 +29,7 @@ const LiveFeed = ({ className }) => {
 
                 {
                     selectedTab.value === 'Selected' &&
-                    <VehicleCard className={'w-full h-[calc(100%-6rem)]'} vehicle_data={selectedVehicle} />
+                    <VehicleCard className={'w-full h-[calc(100%-6rem)]'} vehicle={selectedVehicle} />
                 }
             </div>
         </div>

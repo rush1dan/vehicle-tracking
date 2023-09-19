@@ -1,10 +1,10 @@
 import React from 'react'
 
-const VehicleCard = ({className, vehicle_data}) => {
+const VehicleCard = ({className, vehicle}) => {
     return (
         <div className={className}>
             <div className='w-full h-full'>
-                {vehicle_data.id}
+                {vehicle.id}
             </div>
         </div>
     )
