@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import vehicle_data from '@/demo/vehicles'
 import LiveFeedCard from './LiveFeedCard'
@@ -5,7 +7,7 @@ import LiveFeedCard from './LiveFeedCard'
 const LiveFeed = (props) => {
     return (
         <div className={props.className}>
-            <div className='w-full h-full bg-slate-200'>
+            <div className='w-full h-full'>
                 <Tabs className={'w-full h-24'} />
                 <CardList className={'w-full h-[calc(100%-6rem)]'} vehicles={vehicle_data} />
             </div>
@@ -37,15 +39,15 @@ const Tab = ({ className, title, count, bgColorClass, textColorClass, selected, 
                     <p className={`text-xl font-bold ${textColorClass}`}>{count}</p>
                     <p className={`text-xs font-semibold ${textColorClass}`}>{title}</p>
                 </div>
-            {
-                selected && <div className={`w-full h-2 z-10 ${selectedColorClass} absolute bottom-0`} />
-            }
+                {
+                    selected && <div className={`w-full h-2 z-10 ${selectedColorClass} absolute bottom-0`} />
+                }
             </div>
         </div>
     )
 }
 
-const CardList = ({className, vehicles}) => {
+const CardList = ({ className, vehicles }) => {
     return (
         <div className={className}>
             <div className='w-full h-full p-4 flex flex-col items-start gap-y-4 overflow-y-auto'>
