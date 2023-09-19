@@ -7,7 +7,7 @@ const LiveFeed = (props) => {
         <div className={props.className}>
             <div className='w-full h-full bg-slate-200'>
                 <Tabs className={'w-full h-24'} />
-                <CardList className={'w-full h-[calc(100%-6rem)]'} />
+                <CardList className={'w-full h-[calc(100%-6rem)]'} vehicles={vehicle_data} />
             </div>
         </div>
     )
@@ -45,12 +45,12 @@ const Tab = ({ className, title, count, bgColorClass, textColorClass, selected, 
     )
 }
 
-const CardList = (props) => {
+const CardList = ({className, vehicles}) => {
     return (
-        <div className={props.className}>
+        <div className={className}>
             <div className='w-full h-full p-4 flex flex-col items-start gap-y-4 overflow-y-auto'>
                 {
-                    vehicle_data.map((data, index) => {
+                    vehicles.map((data, index) => {
                         return (
                             <div key={data.id} className='w-full'>
                                 <LiveFeedCard index={index} className={'w-full h-20'} data={data} />
