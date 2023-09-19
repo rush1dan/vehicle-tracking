@@ -38,9 +38,7 @@ const LeafletMap = ({ className, vehicles }) => {
     const selectedVehicle = useSelector((state) => state.selectedVehicle);
     useEffect(() => {
         if (selectedVehicle.id) {
-            console.log("goku");
             const vehicle = { ...selectedVehicle };
-            console.log(vehicle);
             setViewPos([vehicle.lat, vehicle.lon]);
         }
     }, [selectedVehicle.id]);
