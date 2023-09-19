@@ -7,13 +7,18 @@ import L from 'leaflet';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectVehicle } from '@/redux/selectedVehicleSlice';
 
-const myRedIcon = new L.Icon({
+const redMarker = new L.Icon({
     iconUrl: '/marker_red.png',
     iconSize: [32, 32]
 });
 
-const myGreenIcon = new L.Icon({
+const greenMarker = new L.Icon({
     iconUrl: '/marker_green.png',
+    iconSize: [32, 32]
+})
+
+const blueMarker = new L.Icon({
+    iconUrl: '/marker_blue.png',
     iconSize: [32, 32]
 })
 
@@ -66,7 +71,7 @@ const LeafletMap = ({ className, vehicles }) => {
                     vehicles.map((vehicle, index) => {
                         const markerPos = [vehicle.lat, vehicle.lon];
                         return (
-                            <Marker key={index} position={markerPos} icon={vehicle.status == 'moving' ? myGreenIcon : myRedIcon}
+                            <Marker key={index} position={markerPos} icon={vehicle.id === selectedVehicle.id ? blueMarker : (vehicle.status == 'moving' ? greenMarker : redMarker)}
                                 eventHandlers={{
                                     click: () => {
                                         clickVehicle(vehicle, markerPos);
