@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-	index: -1,
 	id: null
 }
 
@@ -10,8 +9,7 @@ export const selectedVehicleSlice = createSlice({
 	initialState,
 	reducers: {
 		selectVehicle: (state, action) => {
-			state.index = action.payload.index;
-			state.id = action.payload.id;
+			Object.assign(state, action.payload);
 		},
 	},
 })

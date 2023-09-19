@@ -5,6 +5,7 @@ import vehicle_data from '@/demo/vehicles'
 import LiveFeedCard from './LiveFeedCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectTab } from '@/redux/selectedTabSlice'
+import VehicleCard from './VehicleCard'
 
 const LiveFeed = (props) => {
     const selectedTab = useSelector((state) => state.selectedTab);
@@ -20,30 +21,35 @@ const LiveFeed = (props) => {
         <div className={props.className}>
             <div className='w-full h-full'>
                 <Tabs className={'w-full h-24'} allVehicleCount={allVehicles.length} movingVehicleCount={movingVehicles.length}
-                    idleVehicleCount={idleVehicles.length} selectedVehicleCount={selectedVehicle.id ? 1 : 0}/>
+                    idleVehicleCount={idleVehicles.length} selectedVehicleCount={selectedVehicle.id ? 1 : 0} />
                 {
-                    selectedTab.value !== 'Selected' && 
+                    selectedTab.value !== 'Selected' &&
                     <CardList className={'w-full h-[calc(100%-6rem)]'} vehicles={vehicleList} />
+                }
+
+                {
+                    selectedTab.value === 'Selected' &&
+                    <VehicleCard className={'w-full h-[calc(100%-6rem)]'} vehicle_data={selectedVehicle} />
                 }
             </div>
         </div>
     )
 }
 
-const Tabs = ({className, allVehicleCount = 0, movingVehicleCount = 0, idleVehicleCount = 0, selectedVehicleCount = 0}) => {
+const Tabs = ({ className, allVehicleCount = 0, movingVehicleCount = 0, idleVehicleCount = 0, selectedVehicleCount = 0 }) => {
     const selectedTab = useSelector((state) => state.selectedTab);
 
     return (
         <div className={className}>
             <div className='w-full h-full flex flex-row items-center justify-center'>
                 <Tab className='w-24 rounded-tl-md overflow-clip' title={'All Vehicles'} bgColorClass={'bg-[#465691]'} textColorClass={'text-white'} count={allVehicleCount}
-                selected={selectedTab.value == 'All Vehicles'} selectedColorClass={'bg-slate-100'} />
+                    selected={selectedTab.value == 'All Vehicles'} selectedColorClass={'bg-slate-100'} />
                 <Tab className='w-24' title={'Moving'} bgColorClass={'bg-green-300'} textColorClass={'text-green-600'} count={movingVehicleCount}
-                selected={selectedTab.value == 'Moving'} selectedColorClass={'bg-green-600'} />
+                    selected={selectedTab.value == 'Moving'} selectedColorClass={'bg-green-600'} />
                 <Tab className='w-24' title={'Idle'} bgColorClass={'bg-red-300'} textColorClass={'text-red-600'} count={idleVehicleCount}
-                selected={selectedTab.value == 'Idle'} selectedColorClass={'bg-red-600'} />
+                    selected={selectedTab.value == 'Idle'} selectedColorClass={'bg-red-600'} />
                 <Tab className='w-24 rounded-tr-md overflow-clip' title={'Selected'} bgColorClass={'bg-blue-300'} textColorClass={'text-blue-600'} count={selectedVehicleCount}
-                selected={selectedTab.value == 'Selected'} selectedColorClass={'bg-blue-600'} />
+                    selected={selectedTab.value == 'Selected'} selectedColorClass={'bg-blue-600'} />
             </div>
         </div>
     )
@@ -72,10 +78,10 @@ const CardList = ({ className, vehicles }) => {
         <div className={className}>
             <div className='w-full h-full p-4 flex flex-col items-start gap-y-4 overflow-y-auto'>
                 {
-                    vehicles.map((data, index) => {
+                    vehicles.map((vehicle, index) => {
                         return (
-                            <div key={data.id} className='w-full'>
-                                <LiveFeedCard index={index} className={'w-full h-20'} data={data} />
+                            <div key={vehicle.id} className='w-full'>
+                                <LiveFeedCard className={'w-full h-20'} vehicle={vehicle} />
                             </div>
                         )
                     })

@@ -32,16 +32,18 @@ const LeafletMap = (props) => {
 
     const selectedVehicle = useSelector((state) => state.selectedVehicle);
     useEffect(() => {
-        if (selectedVehicle.index >= 0) {
-            const vehicle = props.vehicles[selectedVehicle.index];
+        if (selectedVehicle.id) {
+            console.log("goku");
+            const vehicle = { ...selectedVehicle };
+            console.log(vehicle);
             setViewPos([vehicle.lat, vehicle.lon]);
         }
-    }, [selectedVehicle]);
+    }, [selectedVehicle.id]);
 
     const dispatch = useDispatch();
-    function clickVehicle(vehicle_data, position) {
+    function clickVehicle(vehicle, position) {
         setViewPos(position);
-        dispatch(selectVehicle(vehicle_data));
+        dispatch(selectVehicle(vehicle));
     }
 
 
@@ -67,7 +69,7 @@ const LeafletMap = (props) => {
                             <Marker key={index} position={markerPos} icon={vehicle.status == 'moving' ? myGreenIcon : myRedIcon}
                                 eventHandlers={{
                                     click: () => {
-                                        clickVehicle({ index: index, id: vehicle.id }, markerPos);
+                                        clickVehicle(vehicle, markerPos);
                                     },
                                 }}>
                                 <Popup>
