@@ -10,16 +10,17 @@ const LiveFeed = ({ className }) => {
     const selectedTab = useSelector((state) => state.selectedTab);
     const selectedVehicle = useSelector((state) => state.selectedVehicle);
 
-    const allVehicles = Object.values(useSelector((state) => state.allVehicles));
-    const movingVehicles = allVehicles.filter((vehicle) => vehicle.status === 'moving');
-    const idleVehicles = allVehicles.filter((vehicle) => vehicle.status === 'idle');
+    const allVehiclesData = useSelector((state) => state.allVehicles);
+    const allVehiclesList = Object.values(allVehiclesData);
+    const movingVehicles = allVehiclesList.filter((vehicle) => vehicle.status === 'moving');
+    const idleVehicles = allVehiclesList.filter((vehicle) => vehicle.status === 'idle');
 
-    const vehicleList = selectedTab.value === 'All Vehicles' ? allVehicles : (selectedTab.value === 'Moving' ? movingVehicles : idleVehicles);
+    const vehicleList = selectedTab.value === 'All Vehicles' ? allVehiclesList : (selectedTab.value === 'Moving' ? movingVehicles : idleVehicles);
 
     return (
         <div className={className}>
             <div className='w-full h-full'>
-                <Tabs className={'w-full h-24'} allVehicleCount={allVehicles.length} movingVehicleCount={movingVehicles.length}
+                <Tabs className={'w-full h-24'} allVehicleCount={allVehiclesList.length} movingVehicleCount={movingVehicles.length}
                     idleVehicleCount={idleVehicles.length} selectedVehicleCount={selectedVehicle.id ? 1 : 0} />
                 {
                     selectedTab.value !== 'Selected' &&
@@ -28,7 +29,7 @@ const LiveFeed = ({ className }) => {
 
                 {
                     selectedTab.value === 'Selected' &&
-                    <VehicleCard className={'w-full h-[calc(100%-6rem)]'} vehicle={selectedVehicle} />
+                    <VehicleCard className={'w-full h-[calc(100%-6rem)]'} vehicle={allVehiclesData[selectedVehicle.id]} />
                 }
             </div>
         </div>

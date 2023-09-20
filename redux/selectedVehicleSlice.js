@@ -9,7 +9,7 @@ export const selectedVehicleSlice = createSlice({
 	initialState,
 	reducers: {
 		selectVehicle: (state, action) => {
-			Object.assign(state, action.payload);
+			state.id = action.payload;
 		},
 	},
 })
