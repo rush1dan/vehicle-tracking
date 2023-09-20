@@ -1,12 +1,10 @@
 import React from 'react'
 
-import { useSelector } from 'react-redux';
+import { socket } from '@/sections/PageLoader';
 
 const locationUpdateDelta = 0.001;
 
 const UpdateForm = ({ className, vehicle }) => {
-    const socket = useSelector((state) => state.socket.value);
-
     function updateLatitude(sign) {
         const updatedVehicle = { ...vehicle, lat: (vehicle.lat + sign * locationUpdateDelta) };
         socket.emit('input-change', updatedVehicle);
@@ -20,6 +18,7 @@ const UpdateForm = ({ className, vehicle }) => {
     function updateStatus() {
         const updatedVehicle = { ...vehicle, status: (vehicle.status === 'moving' ? 'idle' : 'moving') };
         socket.emit('input-change', updatedVehicle);
+        console.log("change status");
     }
 
     return (

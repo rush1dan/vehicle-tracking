@@ -9,9 +9,9 @@ import vehicle_data from '@/demo/vehicles';
 import { useSelector, useDispatch } from 'react-redux'
 import { setVehicles, updateVehicle } from '@/redux/allVehiclesSlice';
 
-import io from 'socket.io-client'
-import { setSocket } from '@/redux/socketSlice';
-let socket
+import { io } from 'socket.io-client'
+
+let socket;
 
 const PageLoader = ({ className }) => {
     const dispatch = useDispatch();
@@ -21,14 +21,13 @@ const PageLoader = ({ className }) => {
     }, []);
 
     const socketInitializer = async () => {
-        const res = await fetch('/api/hello');
+        const res = await fetch('/api/socket');
         console.log(res);
-        socket = io();
+        socket = io('http://localhost:4000');
         console.log(socket);
 
         socket.on('connect', () => {
             console.log('connected');
-            dispatch(setSocket(socket));
         });
 
         socket.on('update-input', msg => {
@@ -60,4 +59,5 @@ const PageLoader = ({ className }) => {
     )
 }
 
+export {socket}
 export default PageLoader

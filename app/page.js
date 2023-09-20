@@ -1,4 +1,4 @@
-import PageLoader from "@/pages/PageLoader"
+import PageLoader from "@/sections/PageLoader"
 
 
 export default function Home() {
