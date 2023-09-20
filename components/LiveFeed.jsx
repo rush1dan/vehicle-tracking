@@ -10,7 +10,7 @@ const LiveFeed = ({ className }) => {
     const selectedTab = useSelector((state) => state.selectedTab);
     const selectedVehicle = useSelector((state) => state.selectedVehicle);
 
-    const allVehicles = useSelector((state) => state.allVehicles);
+    const allVehicles = Object.values(useSelector((state) => state.allVehicles));
     const movingVehicles = allVehicles.filter((vehicle) => vehicle.status === 'moving');
     const idleVehicles = allVehicles.filter((vehicle) => vehicle.status === 'idle');
 

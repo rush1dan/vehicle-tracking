@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = [];
+const initialState = {};
 
 export const allVehiclesSlice = createSlice({
 	name: 'allVehicles',
@@ -10,7 +10,7 @@ export const allVehiclesSlice = createSlice({
             Object.assign(state, action.payload);
         },
 		updateVehicle: (state, action) => {
-            state[action.payload.index] = action.payload.data;
+            state[action.payload.id] = action.payload;
 		},
 	},
 })

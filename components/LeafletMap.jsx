@@ -49,7 +49,7 @@ const LeafletMap = ({ className }) => {
         dispatch(selectVehicle(vehicle));
     }
 
-    const allVehicles = useSelector((state) => state.allVehicles);
+    const allVehicles = Object.values(useSelector((state) => state.allVehicles));
 
     useEffect(() => {
         setIsMounted(true);
