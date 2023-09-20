@@ -1,5 +1,8 @@
 import Image from 'next/image'
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { updateVehicle } from '@/redux/allVehiclesSlice';
+import { selectVehicle } from '@/redux/selectedVehicleSlice';
 
 const VehicleCard = ({ className, vehicle }) => {
 
@@ -17,6 +20,8 @@ const VehicleCard = ({ className, vehicle }) => {
         default:
             break;
     }
+
+    const dispatch = useDispatch();
 
     return (
         <div className={className}>
@@ -40,6 +45,14 @@ const VehicleCard = ({ className, vehicle }) => {
                         </div>
                         <div className='w-64 h-40 bg-sky-950 rounded-md'>
                         </div>
+                        <button className='px-4 py-4 text-white bg-slate-800 rounded-md'
+                            onClick={() => {
+                                const updatedVehicle = { ...vehicle, status: (vehicle.status === 'moving' ? 'idle' : 'moving') };
+                                dispatch(updateVehicle(updatedVehicle));
+                                dispatch(selectVehicle(updatedVehicle));
+                            }}>
+                            Change Status
+                        </button>
                     </div>
                 </div>
             </div>
