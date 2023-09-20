@@ -41,6 +41,7 @@ const VehicleCard = ({ className, vehicle }) => {
                         </div>
                         <div className='w-64 h-40 bg-sky-950 rounded-md'>
                         </div>
+                        <p className='font-semibold'>Location: {vehicle.lat}, {vehicle.lon}</p>
                         <UpdateForm className={'w-full'} vehicle={vehicle} />
                     </div>
                 </div>
