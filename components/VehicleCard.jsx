@@ -1,8 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import { useDispatch } from 'react-redux';
-import { updateVehicle } from '@/redux/allVehiclesSlice';
-import { selectVehicle } from '@/redux/selectedVehicleSlice';
+import UpdateForm from './UpdateForm';
 
 const VehicleCard = ({ className, vehicle }) => {
 
@@ -20,8 +18,6 @@ const VehicleCard = ({ className, vehicle }) => {
         default:
             break;
     }
-
-    const dispatch = useDispatch();
 
     return (
         <div className={className}>
@@ -45,14 +41,7 @@ const VehicleCard = ({ className, vehicle }) => {
                         </div>
                         <div className='w-64 h-40 bg-sky-950 rounded-md'>
                         </div>
-                        <button className={`px-4 py-4 font-semibold ${vehicle.status == 'idle' ? 'text-green-600' : 'text-red-600'} ${vehicle.status == 'idle' ? 'bg-green-300' : 'bg-red-300'} rounded-md`}
-                            onClick={() => {
-                                const updatedVehicle = { ...vehicle, status: (vehicle.status === 'moving' ? 'idle' : 'moving') };
-                                dispatch(updateVehicle(updatedVehicle));
-                                dispatch(selectVehicle(updatedVehicle));
-                            }}>
-                            Change Status
-                        </button>
+                        <UpdateForm className={'w-full'} vehicle={vehicle} />
                     </div>
                 </div>
             </div>
