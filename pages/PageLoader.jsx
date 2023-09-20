@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import LivePage from './LivePage';
 import DashboardPage from './DashboardPage';
 import SettingsPage from './SettingsPage';
@@ -15,6 +15,8 @@ import { MyContext } from '@/redux/MyContext';
 let socket;
 
 const PageLoader = ({ className }) => {
+    const [isConnected, setIsConnected] = useState(false);
+
     const dispatch = useDispatch();
     useEffect(() => {
         socketInitializer();
@@ -28,6 +30,7 @@ const PageLoader = ({ className }) => {
 
         socket.on('connect', () => {
             console.log('connected');
+            setIsConnected(true);
         });
 
         socket.on('update-input', msg => {
@@ -37,6 +40,10 @@ const PageLoader = ({ className }) => {
     }
 
     const selectedPage = useSelector((state) => state.selectedPage);
+
+    if (!isConnected) {
+        return null;
+    }
 
     return (
         <div className={className}>
