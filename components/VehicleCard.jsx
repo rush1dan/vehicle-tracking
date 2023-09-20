@@ -45,7 +45,7 @@ const VehicleCard = ({ className, vehicle }) => {
                         </div>
                         <div className='w-64 h-40 bg-sky-950 rounded-md'>
                         </div>
-                        <button className='px-4 py-4 text-white bg-slate-800 rounded-md'
+                        <button className={`px-4 py-4 font-semibold ${vehicle.status == 'idle' ? 'text-green-600' : 'text-red-600'} ${vehicle.status == 'idle' ? 'bg-green-300' : 'bg-red-300'} rounded-md`}
                             onClick={() => {
                                 const updatedVehicle = { ...vehicle, status: (vehicle.status === 'moving' ? 'idle' : 'moving') };
                                 dispatch(updateVehicle(updatedVehicle));
