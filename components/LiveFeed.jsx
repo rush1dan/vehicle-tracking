@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import vehicle_data from '@/demo/vehicles'
 import LiveFeedCard from './LiveFeedCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectTab } from '@/redux/selectedTabSlice'
@@ -11,9 +10,9 @@ const LiveFeed = ({ className }) => {
     const selectedTab = useSelector((state) => state.selectedTab);
     const selectedVehicle = useSelector((state) => state.selectedVehicle);
 
-    const allVehicles = vehicle_data;
-    const movingVehicles = vehicle_data.filter((vehicle) => vehicle.status === 'moving');
-    const idleVehicles = vehicle_data.filter((vehicle) => vehicle.status === 'idle');
+    const allVehicles = useSelector((state) => state.allVehicles);
+    const movingVehicles = allVehicles.filter((vehicle) => vehicle.status === 'moving');
+    const idleVehicles = allVehicles.filter((vehicle) => vehicle.status === 'idle');
 
     const vehicleList = selectedTab.value === 'All Vehicles' ? allVehicles : (selectedTab.value === 'Moving' ? movingVehicles : idleVehicles);
 

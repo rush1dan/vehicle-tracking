@@ -31,7 +31,7 @@ const MapControls = ({ position }) => {
     }
 }
 
-const LeafletMap = ({ className, vehicles }) => {
+const LeafletMap = ({ className }) => {
     const [isMounted, setIsMounted] = useState(false);
     const [viewPos, setViewPos] = useState([]);
 
@@ -49,6 +49,7 @@ const LeafletMap = ({ className, vehicles }) => {
         dispatch(selectVehicle(vehicle));
     }
 
+    const allVehicles = useSelector((state) => state.allVehicles);
 
     useEffect(() => {
         setIsMounted(true);
@@ -56,7 +57,6 @@ const LeafletMap = ({ className, vehicles }) => {
     if (!isMounted) {
         return null;
     }
-
 
     return (
         <div className={`${className} relative`}>
@@ -66,7 +66,7 @@ const LeafletMap = ({ className, vehicles }) => {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 {
-                    vehicles.map((vehicle, index) => {
+                    allVehicles.map((vehicle, index) => {
                         const markerPos = [vehicle.lat, vehicle.lon];
                         return (
                             <Marker key={index} position={markerPos} icon={vehicle.id === selectedVehicle.id ? blueMarker : (vehicle.status == 'moving' ? greenMarker : redMarker)}
