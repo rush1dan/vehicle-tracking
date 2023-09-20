@@ -24,7 +24,7 @@ const VehicleCard = ({ className, vehicle }) => {
             <div className='w-full h-full p-6'>
                 <div className='w-full h-full bg-slate-100 rounded-md shadow-lg shadow-slate-800/10 p-6 overflow-y-auto'>
                     <div className='w-full flex flex-col items-center justify-start gap-y-6'>
-                        <div className='w-48 h-32 bg-gray-200 rounded-md'>
+                        <div className='w-48 h-32 bg-slate-300 rounded-md'>
                             <div className='w-full h-full relative'>
                                 <Image src={vehicle_pic} alt='vehicle pic' loading='lazy' fill />
                                 <div className={`w-16 h-6 rounded-md flex justify-center items-center 

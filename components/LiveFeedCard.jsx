@@ -5,22 +5,37 @@ import Address from './Address'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectVehicle } from '@/redux/selectedVehicleSlice'
 import { selectTab } from '@/redux/selectedTabSlice'
+import Image from 'next/image'
 
 const LiveFeedCard = ({ className, vehicle }) => {
     const dispatch = useDispatch();
     const selectedVehicle = useSelector((state) => state.selectedVehicle);
     const [isSelected, setIsSelected] = useState(false);
-    useEffect(() => { 
-        if (selectedVehicle.id === vehicle.id)
-        {
+    useEffect(() => {
+        if (selectedVehicle.id === vehicle.id) {
             if (!isSelected) {
                 setIsSelected(true);
             }
         }
-        else if(isSelected) {
+        else if (isSelected) {
             setIsSelected(false);
         }
     }, [selectedVehicle]);
+
+    let vehicle_pic = '/placeholder_image.svg'
+    switch (vehicle.category) {
+        case 'car':
+            vehicle_pic = '/car.svg';
+            break;
+        case 'bus':
+            vehicle_pic = '/bus.svg';
+            break;
+        case 'truck':
+            vehicle_pic = '/truck.svg';
+            break;
+        default:
+            break;
+    }
 
     return (
         <div className={className}>
@@ -31,7 +46,8 @@ const LiveFeedCard = ({ className, vehicle }) => {
                     dispatch(selectTab('Selected'));
                 }}>
                 <div className='w-full h-full flex flex-row items-center justify-between gap-x-4'>
-                    <div className='h-3/4 aspect-square rounded-md bg-slate-400'>
+                    <div className='h-3/4 aspect-square rounded-md bg-slate-300 relative'>
+                        <Image src={vehicle_pic} alt='vehicle pic' loading='lazy' fill />
                     </div>
                     <div className='grow flex flex-col justify-between items-start'>
                         <p>{vehicle.model}</p>
