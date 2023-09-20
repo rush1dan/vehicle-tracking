@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setVehicles, updateVehicle } from '@/redux/allVehiclesSlice';
 
 import { io } from 'socket.io-client'
+import { MyContext } from '@/redux/MyContext';
 
 let socket;
 
@@ -40,21 +41,20 @@ const PageLoader = ({ className }) => {
 
     return (
         <div className={className}>
-            {
-                selectedPage.value === 'Dashboard' &&
-                <DashboardPage />
-            }
-
-            {
-                selectedPage.value === 'Live' &&
-                <LivePage />
-            }
-
-            {
-                selectedPage.value === 'Settings' &&
-                <SettingsPage />
-            }
-
+            <MyContext.Provider value={socket}>
+                {
+                    selectedPage.value === 'Dashboard' &&
+                    <DashboardPage />
+                }
+                {
+                    selectedPage.value === 'Live' &&
+                    <LivePage />
+                }
+                {
+                    selectedPage.value === 'Settings' &&
+                    <SettingsPage />
+                }
+            </MyContext.Provider>
         </div>
     )
 }

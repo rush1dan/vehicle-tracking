@@ -1,10 +1,12 @@
-import React from 'react'
-
-import { socket } from '@/sections/PageLoader';
+import { MyContext } from '@/redux/MyContext';
+import React, { useContext } from 'react'
 
 const locationUpdateDelta = 0.001;
 
 const UpdateForm = ({ className, vehicle }) => {
+
+    const socket = useContext(MyContext);
+
     function updateLatitude(sign) {
         const updatedVehicle = { ...vehicle, lat: (vehicle.lat + sign * locationUpdateDelta) };
         socket.emit('input-change', updatedVehicle);
