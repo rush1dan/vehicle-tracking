@@ -16,7 +16,7 @@ const SocketHandler = (req, res) => {
         io.on('connection', socket => {
             console.log('Server: Connection Established')
             socket.on('input-change', msg => {
-                console.log('Server: Detected Input Change:', msg);
+                console.log('Server: Detected Input Change');
                 socket.emit('update-input', msg)
                 socket.broadcast.emit('update-input', msg)
             })

@@ -34,7 +34,7 @@ const PageLoader = ({ className }) => {
         });
 
         socket.on('update-input', msg => {
-            console.log("Client Received: ", msg);
+            console.log("Client: Detected Input Update");
             dispatch(updateVehicle(msg));
         });
     }
