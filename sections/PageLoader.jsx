@@ -23,9 +23,8 @@ const PageLoader = ({ className }) => {
 
     const socketInitializer = async () => {
         const res = await fetch('/api/socket');
-        console.log(res);
-        socket = io('http://localhost:4000');
-        console.log(socket);
+
+        socket = io('http://localhost:5000');
 
         socket.on('connect', () => {
             console.log('connected');

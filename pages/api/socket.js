@@ -1,7 +1,7 @@
 import { Server } from 'socket.io'
 
 const SocketHandler = (req, res) => {
-    if (false) {
+    if (res.socket.server.io) {
         console.log('Socket is already running')
     } else {
         console.log('Socket is initializing')
@@ -10,7 +10,7 @@ const SocketHandler = (req, res) => {
                 origin: "*"
             }
         })
-        io.listen(4000);
+        io.listen(5000);
         res.socket.server.io = io
 
         io.on('connection', socket => {
