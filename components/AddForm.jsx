@@ -20,8 +20,8 @@ const AddForm = ({ className, close }) => {
         e.preventDefault();
         const newVehicle = {
             'id': id,
-            'lat': lat,
-            'lon': lon,
+            'lat': Number(lat),
+            'lon': Number(lon),
             'status': status,
             'category': category,
             'model': model
@@ -57,12 +57,12 @@ const AddForm = ({ className, close }) => {
                         <div className='flex flex-col items-start justify-between'>
                             <label htmlFor='id' className='font-semibold text-gray-500 px-2 py-1'>Status</label>
                             <input type='text' id='id' name='id' className='text-base border border-gray-500 rounded-md w-28 p-2' required
-                                value={'Idle'} onChange={(e) => setStatus(e.target.value)} />
+                                placeholder={'Idle'} onChange={(e) => setStatus(e.target.value.toLowerCase())} />
                         </div>
                         <div className='flex flex-col items-start justify-between'>
                             <label htmlFor='model' className='font-semibold text-gray-500 px-2 py-1'>Category</label>
                             <input type='text' id='model' name='model' className='text-base border border-gray-500 rounded-md w-28 p-2' required
-                                value={'Car'} onChange={(e) => setCategory(e.target.value)} />
+                                placeholder={'Car'} onChange={(e) => setCategory(e.target.value.toLowerCase())} />
                         </div>
                     </div>
 
@@ -70,12 +70,12 @@ const AddForm = ({ className, close }) => {
                     <div className='flex flex-row items-center justify-center gap-x-8'>
                         <div className='flex flex-col items-start justify-between'>
                             <label htmlFor='lat' className='font-semibold text-gray-500 px-2 py-1'>Latitude</label>
-                            <input type='number' min={-90} max={90} id='lat' name='lat' className='text-base border border-gray-500 rounded-md w-28 p-2' required
+                            <input type='decimal' min={-90} max={90} id='lat' name='lat' className='text-base border border-gray-500 rounded-md w-28 p-2' required
                                 onChange={(e) => setLat(e.target.value)} />
                         </div>
                         <div className='flex flex-col items-start justify-between'>
                             <label htmlFor='lon' className='font-semibold text-gray-500 px-2 py-1'>Longitude</label>
-                            <input type='number' min={-180} max={180} id='lon' name='lon' className='text-base border border-gray-500 rounded-md w-28 p-2' required
+                            <input type='decimal' min={-180} max={180} id='lon' name='lon' className='text-base border border-gray-500 rounded-md w-28 p-2' required
                                 onChange={(e) => setLon(e.target.value)} />
                         </div>
                     </div>
