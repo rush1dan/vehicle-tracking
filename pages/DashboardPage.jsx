@@ -13,7 +13,7 @@ const DashboardPage = () => {
 
     return (
         <div className='w-full h-full'>
-            <div className='w-full h-full flex flex-col items-center justify-start'>
+            <div className='w-full h-full flex flex-col items-center justify-start overflow-y-auto'>
                 <div className='w-full h-full p-4 max-w-7xl flex flex-col items-center justify-start md:gap-y-20 gap-y-8'>
                     <div className='w-full flex md:flex-row flex-col items-center justify-start md:gap-x-8 gap-y-4'>
                         <InfoBox className={'w-40 md:h-24'} status={'All'} vehicleCount={allVehiclesList.length} />
@@ -82,7 +82,7 @@ const AddButton = () => {
 const VehiclesList = ({ className, vehicles }) => {
     return (
         <div className={className}>
-            <div className='w-full h-full px-4 md:py-4 flex flex-col items-start gap-y-4 overflow-y-auto'>
+            <div className='w-full h-full px-4 md:py-4 flex flex-col items-start gap-y-4'>
                 {
                     vehicles.map((vehicle, index) => {
                         return (
