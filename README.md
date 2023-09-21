@@ -29,5 +29,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 Duplicate the browser tab to see realtime syncing between server and multiple client instances.
 
+You can also connect from a different device on the same network providing the correct server local ip for example: http://192.168.1.10:3000.
+
 ## Demo
 [![IMAGE ALT TEXT HERE](VehicleTracking_YT.png)](https://www.youtube.com/watch?v=IUBV-C7MmDs)
