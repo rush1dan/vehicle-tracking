@@ -9,18 +9,17 @@ const UpdateForm = ({ className, vehicle }) => {
 
     function updateLatitude(sign) {
         const updatedVehicle = { ...vehicle, lat: (vehicle.lat + sign * locationUpdateDelta) };
-        socket.emit('input-change', updatedVehicle);
+        socket.emit('vehicle-update', updatedVehicle);
     }
 
     function updateLongitude(sign) {
         const updatedVehicle = { ...vehicle, lon: (vehicle.lon + sign * locationUpdateDelta) };
-        socket.emit('input-change', updatedVehicle);
+        socket.emit('vehicle-update', updatedVehicle);
     }
 
     function updateStatus() {
         const updatedVehicle = { ...vehicle, status: (vehicle.status === 'moving' ? 'idle' : 'moving') };
-        socket.emit('input-change', updatedVehicle);
-        console.log("change status");
+        socket.emit('vehicle-update', updatedVehicle);
     }
 
     return (

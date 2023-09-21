@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import LivePage from './LivePage';
 import DashboardPage from './DashboardPage';
 import SettingsPage from './SettingsPage';
-import vehicle_data from '@/demo/vehicles';
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setVehicles, updateVehicle } from '@/redux/allVehiclesSlice';
@@ -16,11 +15,11 @@ let socket;
 
 const PageLoader = ({ className }) => {
     const [isConnected, setIsConnected] = useState(false);
+    const [isDataReceived, setIsDataReceived] = useState(false);
 
     const dispatch = useDispatch();
     useEffect(() => {
         socketInitializer();
-        dispatch(setVehicles(vehicle_data));
     }, []);
 
     const socketInitializer = async () => {
@@ -31,17 +30,24 @@ const PageLoader = ({ className }) => {
         socket.on('connect', () => {
             console.log('connected');
             setIsConnected(true);
+            socket.emit('request-data');
         });
 
-        socket.on('update-input', msg => {
+        socket.on('serve-data', data => {
+            console.log("Client: Received Initial Data");
+            dispatch(setVehicles(data));
+            setIsDataReceived(true);
+        });
+
+        socket.on('update-vehicle', vehicle => {
             console.log("Client: Detected Input Update");
-            dispatch(updateVehicle(msg));
+            dispatch(updateVehicle(vehicle));
         });
     }
 
     const selectedPage = useSelector((state) => state.selectedPage);
 
-    if (!isConnected) {
+    if (!isConnected || !isDataReceived) {
         return null;
     }
 
