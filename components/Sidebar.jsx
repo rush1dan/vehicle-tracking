@@ -8,7 +8,7 @@ const Sidebar = ({ className }) => {
     const shouldSideBarOpen = useSelector((state) => state.sideBarOpen).value;
 
     return (
-        <div className={`${className} md:block md:relative absolute left-0 z-20 ${shouldSideBarOpen ? '' : 'hidden'}`}>
+        <div className={`${className} md:block md:relative absolute left-0 z-[2000] ${shouldSideBarOpen ? '' : 'hidden'}`}>
             <div className='w-full h-full flex flex-col items-center justify-start bg-blue-600'>
                 <div className='w-full h-4'></div>
                 <NavButton classname={'w-full h-32'} title={'Dashboard'} iconSrc={'/dashboard.svg'} />

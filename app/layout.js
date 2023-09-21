@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
 					<div className='h-[calc(100vh-4rem)] w-full overflow-hidden'>
 						<div className='w-full h-full flex flex-row items-center justify-start relative'>
 							<Sidebar className={'w-32 h-full'} />
-							<div className='w-[calc(100%-8rem)] h-full'>
+							<div className='md:w-[calc(100%-8rem)] w-full h-full'>
 								{children}
 							</div>
 						</div>
