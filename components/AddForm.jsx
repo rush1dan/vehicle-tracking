@@ -29,7 +29,16 @@ const AddForm = ({ className, close }) => {
 
                     {/* Status and Category */}
                     <div className='flex flex-row items-center justify-center gap-x-8'>
-
+                        <div className='flex flex-col items-start justify-between'>
+                            <label htmlFor='id' className='font-semibold text-gray-500 px-2 py-1'>Status</label>
+                            <input type='text' id='id' name='id' className='text-base border border-gray-500 rounded-md w-28 p-2' required
+                                value={'Idle'}/>
+                        </div>
+                        <div className='flex flex-col items-start justify-between'>
+                            <label htmlFor='model' className='font-semibold text-gray-500 px-2 py-1'>Category</label>
+                            <input type='text' id='model' name='model' className='text-base border border-gray-500 rounded-md w-28 p-2' required
+                                value={'Car'}/>
+                        </div>
                     </div>
 
                     {/* Lat and Lon */}
@@ -43,7 +52,7 @@ const AddForm = ({ className, close }) => {
                             <input type='number' min={-180} max={180} id='lon' name='lon' className='text-base border border-gray-500 rounded-md w-28 p-2' required />
                         </div>
                     </div>
-                    <button type='submit' className='mt-8 px-6 py-3 bg-slate-400 text-white font-semibold text-lg rounded-lg'>Submit</button>
+                    <button type='submit' className='mt-8 px-6 py-3 bg-slate-400 hover:bg-slate-500 text-white font-semibold text-lg rounded-lg'>Submit</button>
                 </form>
             </div>
         </div>
