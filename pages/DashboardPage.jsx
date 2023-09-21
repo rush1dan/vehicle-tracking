@@ -13,11 +13,11 @@ const DashboardPage = () => {
     return (
         <div className='w-full h-full'>
             <div className='w-full h-full flex flex-col items-center justify-start'>
-                <div className='w-full h-full p-4 max-w-7xl flex flex-col items-center justify-start gap-y-20'>
-                    <div className='w-full flex flex-row items-center justify-start gap-x-8'>
-                        <InfoBox className={'w-40 h-24'} status={'All'} vehicleCount={allVehiclesList.length} />
-                        <InfoBox className={'w-40 h-24'} status={'Moving'} vehicleCount={movingVehiclesList.length} />
-                        <InfoBox className={'w-40 h-24'} status={'Idle'} vehicleCount={idleVehiclesList.length} />
+                <div className='w-full h-full p-4 max-w-7xl flex flex-col items-center justify-start md:gap-y-20 gap-y-8'>
+                    <div className='w-full flex md:flex-row flex-col items-center justify-start md:gap-x-8 gap-y-4'>
+                        <InfoBox className={'w-40 md:h-24'} status={'All'} vehicleCount={allVehiclesList.length} />
+                        <InfoBox className={'w-40 md:h-24'} status={'Moving'} vehicleCount={movingVehiclesList.length} />
+                        <InfoBox className={'w-40 md:h-24'} status={'Idle'} vehicleCount={idleVehiclesList.length} />
                     </div>
                     <AddButton />
                     <VehiclesList className={'w-full h-[32rem]'} vehicles={allVehiclesList} />
@@ -121,13 +121,13 @@ const VehiclesListItem = ({ className, vehicle }) => {
     return (
         <div className={className}>
             <div className={`w-full h-full bg-slate-100 shadow-md shadow-slate-900/10 rounded-md p-4`}>
-                <div className='w-full h-full flex flex-row items-center justify-between gap-x-8'>
+                <div className='w-full h-full flex flex-row items-center justify-between md:gap-x-8 gap-x-2'>
                     <div className='h-full aspect-square rounded-md bg-slate-300 relative'>
                         <Image src={vehicle_pic} alt='vehicle pic' loading='lazy' fill />
                     </div>
                     <div className='grow flex flex-col justify-between items-start'>
-                        <p>{vehicle.model}</p>
-                        <p>{vehicle.id}</p>
+                        <p className='md:text-base text-sm'>{vehicle.model}</p>
+                        <p className='md:text-base text-sm'>{vehicle.id}</p>
                         {/* <Address className={'text-xs'} latlondata={{ lat: vehicle.lat, lon: vehicle.lon }} selected={isSelected} /> */}
                         <div className={`w-16 h-6 rounded-md flex justify-center items-center ${vehicle.status == 'moving' ? 'bg-green-300' : 'bg-red-300'}`}>
                             <p className={`${vehicle.status == 'moving' ? 'text-green-600' : 'text-red-600'} 
@@ -135,7 +135,7 @@ const VehiclesListItem = ({ className, vehicle }) => {
                         </div>
                     </div>
                     <div className='h-full flex flex-col justify-center items-center'>
-                        <button className='px-4 py-2 bg-red-500 hover:bg-red-600 text-red-950 rounded-md'
+                        <button className='md:px-4 py-2 bg-red-500 hover:bg-red-600 text-red-950 rounded-md font-semibold md:text-base text-xs px-1'
                             onClick={() => removeVehicle(vehicle)}>
                             Remove
                         </button>
