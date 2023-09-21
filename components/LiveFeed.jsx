@@ -76,7 +76,7 @@ const Tab = ({ className, title, count, bgColorClass, textColorClass, selected, 
 const CardList = ({ className, vehicles }) => {
     return (
         <div className={className}>
-            <div className='w-full h-full p-4 flex flex-col items-start gap-y-4 overflow-y-auto'>
+            <div className='w-full h-full px-4 md:py-4 flex flex-col items-start gap-y-4 overflow-y-auto'>
                 {
                     vehicles.map((vehicle, index) => {
                         return (
