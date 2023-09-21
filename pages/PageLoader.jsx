@@ -42,7 +42,12 @@ const PageLoader = ({ className }) => {
         });
 
         socket.on('update-vehicle', vehicle => {
-            console.log("Client: Detected Input Update");
+            console.log("Client: Detected Vehicle Update");
+            dispatch(updateVehicle(vehicle));
+        });
+
+        socket.on('add-vehicle', vehicle => {
+            console.log("Client: Detected Vehicle Addition");
             dispatch(updateVehicle(vehicle));
         });
     }

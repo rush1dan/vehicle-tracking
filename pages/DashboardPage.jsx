@@ -5,8 +5,6 @@ import { selectVehicle } from '@/redux/selectedVehicleSlice'
 import AddForm from '@/components/AddForm';
 
 const DashboardPage = () => {
-    const selectedVehicle = useSelector((state) => state.selectedVehicle);
-
     const allVehiclesData = useSelector((state) => state.allVehicles);
     const allVehiclesList = Object.values(allVehiclesData);
     const movingVehiclesList = allVehiclesList.filter((vehicle) => vehicle.status === 'moving');
@@ -100,7 +98,6 @@ const VehiclesList = ({ className, vehicles }) => {
 
 const VehiclesListItem = ({ className, vehicle }) => {
     const dispatch = useDispatch();
-    
     let vehicle_pic = '/placeholder_image.svg'
     switch (vehicle.category) {
         case 'car':

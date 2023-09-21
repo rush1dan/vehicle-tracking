@@ -119,8 +119,16 @@ const SocketHandler = (req, res) => {
             socket.on('vehicle-update', vehicle => {
                 console.log('Server: Detected Input Change');
                 vehicle_data[vehicle.id] = vehicle;     //Update data on the server for syncing with clients connected later (demo app) :: Update data on the database (real app)
-                socket.emit('update-vehicle', vehicle)
-                socket.broadcast.emit('update-vehicle', vehicle)
+                socket.emit('update-vehicle', vehicle);
+                socket.broadcast.emit('update-vehicle', vehicle);
+            });
+
+            socket.on('vehicle-add', vehicle => {
+                console.log('Server: Detected Vehicle Addition');
+                vehicle_data[vehicle.id] = vehicle;     //Update data on the server for syncing with clients connected later (demo app) :: Update data on the database (real app)
+                socket.emit('add-vehicle', vehicle);
+                socket.broadcast.emit('add-vehicle', vehicle);
+                console.log(vehicle);
             });
         })
     }
