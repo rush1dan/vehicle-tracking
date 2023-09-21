@@ -30,4 +30,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 Duplicate the browser tab to see realtime syncing between server and multiple client instances.
 
 ## Demo
-<div align='center'><iframe width="560" height="315" src='https://www.youtube.com/embed/IUBV-C7MmDs'></iframe></div>
+[![IMAGE ALT TEXT HERE](VehicleTracking_YT.png)](https://www.youtube.com/watch?v=IUBV-C7MmDs)
