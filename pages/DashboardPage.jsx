@@ -1,7 +1,8 @@
 import Image from 'next/image';
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { selectVehicle } from '@/redux/selectedVehicleSlice'
+import AddForm from '@/components/AddForm';
 
 const DashboardPage = () => {
     const selectedVehicle = useSelector((state) => state.selectedVehicle);
@@ -64,10 +65,18 @@ const InfoBox = ({ className, status, vehicleCount }) => {
 }
 
 const AddButton = () => {
+    const [formOpen, setFormOpen] = useState(false);
     return (
-        <button className='px-8 py-4 rounded-lg text-2xl text-white font-semibold tracking-wider bg-blue-400 hover:bg-blue-500'>
-            ADD
-        </button>
+        <>
+            <button className={`px-8 py-4 rounded-lg text-2xl text-white font-semibold tracking-wider bg-blue-400 hover:bg-blue-500 ${formOpen ? 'invisible' : 'visible'}`}
+                onClick={() => setFormOpen(true)}>
+                ADD
+            </button>
+            {
+                formOpen &&
+                <AddForm className={'absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 z-10'} close={() => setFormOpen(false)} />
+            }
+        </>
     )
 }
 
