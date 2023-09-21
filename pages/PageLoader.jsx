@@ -25,8 +25,9 @@ const PageLoader = ({ className }) => {
 
     const socketInitializer = async () => {
         const res = await fetch('/api/socket');
-
-        socket = io('http://localhost:5000');
+        const server_port = 5000;
+        const server_url = `${window.location.protocol}//${window.location.hostname}:${server_port}`;
+        socket = io(server_url);
 
         socket.on('connect', () => {
             console.log('connected');
