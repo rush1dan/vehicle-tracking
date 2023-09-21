@@ -3,6 +3,7 @@ import React, { useState, useContext } from 'react'
 import { useSelector } from 'react-redux';
 import AddForm from '@/components/AddForm';
 import { MyContext } from '@/redux/MyContext';
+import EditForm from '@/components/EditForm';
 
 const DashboardPage = () => {
     const allVehiclesData = useSelector((state) => state.allVehicles);
@@ -86,7 +87,7 @@ const VehiclesList = ({ className, vehicles }) => {
                     vehicles.map((vehicle, index) => {
                         return (
                             <div key={vehicle.id} className='w-full'>
-                                <VehiclesListItem className={'w-full h-24'} vehicle={vehicle} />
+                                <VehiclesListItem className={'w-full h-28'} vehicle={vehicle} />
                             </div>
                         )
                     })
@@ -102,6 +103,8 @@ const VehiclesListItem = ({ className, vehicle }) => {
     function removeVehicle(vehicle) {
         socket.emit('vehicle-remove', vehicle);
     }
+
+    const [formOpen, setFormOpen] = useState(false);
 
     let vehicle_pic = '/placeholder_image.svg'
     switch (vehicle.category) {
@@ -134,12 +137,20 @@ const VehiclesListItem = ({ className, vehicle }) => {
                             font-semibold text-sm`}>{vehicle.status.charAt(0).toUpperCase() + vehicle.status.slice(1)}</p>
                         </div>
                     </div>
-                    <div className='h-full flex flex-col justify-center items-center'>
-                        <button className='md:px-4 py-2 bg-red-500 hover:bg-red-600 text-red-950 rounded-md font-semibold md:text-base text-xs px-1'
+                    <div className={`h-full flex flex-col justify-center items-center gap-y-2 ${formOpen ? 'invisible' : 'visible'}`}>
+                        <button className='md:w-24 w-14 py-2 bg-blue-500 hover:bg-blue-600 text-blue-950 rounded-md font-semibold md:text-base text-xs'
+                            onClick={() => setFormOpen(true)}>
+                            Edit
+                        </button>
+                        <button className='md:w-24 w-14 py-2 bg-red-500 hover:bg-red-600 text-red-950 rounded-md font-semibold md:text-base text-xs'
                             onClick={() => removeVehicle(vehicle)}>
                             Remove
                         </button>
                     </div>
+                        {
+                            formOpen &&
+                            <EditForm className={'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-10'} vehicle={vehicle} close={() => setFormOpen(false)} />
+                        }
                 </div>
             </div>
         </div>
