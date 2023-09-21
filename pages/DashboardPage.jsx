@@ -1,8 +1,8 @@
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux';
-import { selectVehicle } from '@/redux/selectedVehicleSlice'
+import React, { useState, useContext } from 'react'
+import { useSelector } from 'react-redux';
 import AddForm from '@/components/AddForm';
+import { MyContext } from '@/redux/MyContext';
 
 const DashboardPage = () => {
     const allVehiclesData = useSelector((state) => state.allVehicles);
@@ -97,7 +97,12 @@ const VehiclesList = ({ className, vehicles }) => {
 }
 
 const VehiclesListItem = ({ className, vehicle }) => {
-    const dispatch = useDispatch();
+    const socket = useContext(MyContext);
+
+    function removeVehicle(vehicle) {
+        socket.emit('vehicle-remove', vehicle);
+    }
+
     let vehicle_pic = '/placeholder_image.svg'
     switch (vehicle.category) {
         case 'car':
@@ -115,10 +120,7 @@ const VehiclesListItem = ({ className, vehicle }) => {
 
     return (
         <div className={className}>
-            <div className={`w-full h-full bg-slate-100 shadow-md shadow-slate-900/10 rounded-md p-4`}
-                onClick={() => {
-                    dispatch(selectVehicle(vehicle.id));
-                }}>
+            <div className={`w-full h-full bg-slate-100 shadow-md shadow-slate-900/10 rounded-md p-4`}>
                 <div className='w-full h-full flex flex-row items-center justify-between gap-x-8'>
                     <div className='h-full aspect-square rounded-md bg-slate-300 relative'>
                         <Image src={vehicle_pic} alt='vehicle pic' loading='lazy' fill />
@@ -133,7 +135,8 @@ const VehiclesListItem = ({ className, vehicle }) => {
                         </div>
                     </div>
                     <div className='h-full flex flex-col justify-center items-center'>
-                        <button className='px-4 py-2 bg-red-500 hover:bg-red-600 text-red-950 rounded-md '>
+                        <button className='px-4 py-2 bg-red-500 hover:bg-red-600 text-red-950 rounded-md'
+                            onClick={() => removeVehicle(vehicle)}>
                             Remove
                         </button>
                     </div>

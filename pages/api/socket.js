@@ -128,7 +128,13 @@ const SocketHandler = (req, res) => {
                 vehicle_data[vehicle.id] = vehicle;     //Update data on the server for syncing with clients connected later (demo app) :: Update data on the database (real app)
                 socket.emit('add-vehicle', vehicle);
                 socket.broadcast.emit('add-vehicle', vehicle);
-                console.log(vehicle);
+            });
+
+            socket.on('vehicle-remove', vehicle => {
+                console.log('Server: Detected Vehicle Removal');
+                delete vehicle_data[vehicle.id];    //Update data on the server for syncing with clients connected later (demo app) :: Update data on the database (real app)
+                socket.emit('remove-vehicle', vehicle);
+                socket.broadcast.emit('remove-vehicle', vehicle);
             });
         })
     }

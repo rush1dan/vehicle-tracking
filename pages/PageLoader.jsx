@@ -6,7 +6,7 @@ import DashboardPage from './DashboardPage';
 import SettingsPage from './SettingsPage';
 
 import { useSelector, useDispatch } from 'react-redux'
-import { setVehicles, updateVehicle } from '@/redux/allVehiclesSlice';
+import { setVehicles, updateVehicle, addVehicle, removeVehicle } from '@/redux/allVehiclesSlice';
 
 import { io } from 'socket.io-client'
 import { MyContext } from '@/redux/MyContext';
@@ -48,7 +48,12 @@ const PageLoader = ({ className }) => {
 
         socket.on('add-vehicle', vehicle => {
             console.log("Client: Detected Vehicle Addition");
-            dispatch(updateVehicle(vehicle));
+            dispatch(addVehicle(vehicle));
+        });
+
+        socket.on('remove-vehicle', vehicle => {
+            console.log("Client: Detected Vehicle Removal");
+            dispatch(removeVehicle(vehicle));
         });
     }
 
