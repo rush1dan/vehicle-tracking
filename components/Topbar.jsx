@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import MobileMenu from './MobileMenu'
 
 const Topbar = ({ className }) => {
     return (
@@ -9,6 +10,7 @@ const Topbar = ({ className }) => {
                 <Link href='/' className='w-24 h-20 absolute top-1/2 left-16 -translate-y-1/2'>
                     <Image src='/tracky.png' alt='logo' loading='eager' fill objectFit='contain' />
                 </Link>
+                <MobileMenu className='w-10 h-10 absolute top-1/2 -translate-y-1/2 left-2 md:hidden' />
             </div>
         </div>
     )

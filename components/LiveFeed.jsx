@@ -42,13 +42,13 @@ const Tabs = ({ className, allVehicleCount = 0, movingVehicleCount = 0, idleVehi
     return (
         <div className={className}>
             <div className='w-full h-full flex flex-row items-center justify-center'>
-                <Tab className='w-24 rounded-tl-md overflow-clip' title={'All Vehicles'} bgColorClass={'bg-[#465691]'} textColorClass={'text-white'} count={allVehicleCount}
+                <Tab className='w-20 md:w-20 lg:w-24 rounded-tl-md overflow-clip' title={'All Vehicles'} bgColorClass={'bg-[#465691]'} textColorClass={'text-white'} count={allVehicleCount}
                     selected={selectedTab.value == 'All Vehicles'} selectedColorClass={'bg-slate-100'} />
-                <Tab className='w-24' title={'Moving'} bgColorClass={'bg-green-300'} textColorClass={'text-green-600'} count={movingVehicleCount}
+                <Tab className='w-20 md:w-20 lg:w-24' title={'Moving'} bgColorClass={'bg-green-300'} textColorClass={'text-green-600'} count={movingVehicleCount}
                     selected={selectedTab.value == 'Moving'} selectedColorClass={'bg-green-600'} />
-                <Tab className='w-24' title={'Idle'} bgColorClass={'bg-red-300'} textColorClass={'text-red-600'} count={idleVehicleCount}
+                <Tab className='w-20 md:w-20 lg:w-24' title={'Idle'} bgColorClass={'bg-red-300'} textColorClass={'text-red-600'} count={idleVehicleCount}
                     selected={selectedTab.value == 'Idle'} selectedColorClass={'bg-red-600'} />
-                <Tab className='w-24 rounded-tr-md overflow-clip' title={'Selected'} bgColorClass={'bg-blue-300'} textColorClass={'text-blue-600'} count={selectedVehicleCount}
+                <Tab className='w-20 md:w-20 lg:w-24 rounded-tr-md overflow-clip' title={'Selected'} bgColorClass={'bg-blue-300'} textColorClass={'text-blue-600'} count={selectedVehicleCount}
                     selected={selectedTab.value == 'Selected'} selectedColorClass={'bg-blue-600'} />
             </div>
         </div>
@@ -76,7 +76,7 @@ const Tab = ({ className, title, count, bgColorClass, textColorClass, selected, 
 const CardList = ({ className, vehicles }) => {
     return (
         <div className={className}>
-            <div className='w-full h-full p-4 flex flex-col items-start gap-y-4 overflow-y-auto'>
+            <div className='w-full h-full px-4 md:py-4 flex flex-col items-start gap-y-4 overflow-y-auto'>
                 {
                     vehicles.map((vehicle, index) => {
                         return (
