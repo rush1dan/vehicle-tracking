@@ -10,6 +10,7 @@ import { setVehicles, updateVehicle } from '@/redux/allVehiclesSlice';
 
 import { io } from 'socket.io-client'
 import { MyContext } from '@/redux/MyContext';
+import Loading from '@/components/Loading';
 
 let socket;
 
@@ -48,7 +49,7 @@ const PageLoader = ({ className }) => {
     const selectedPage = useSelector((state) => state.selectedPage);
 
     if (!isConnected || !isDataReceived) {
-        return null;
+        return <Loading className={'w-full h-full text-slate-900'} />
     }
 
     return (

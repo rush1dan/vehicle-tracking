@@ -17,10 +17,10 @@ export default function RootLayout({ children }) {
 			<body className={inter.className}>
 				<ReduxProvider>
 					<Topbar className={'w-screen h-16'} />
-					<div className='h-[calc(100vh-4rem)] w-full bg-red-200 overflow-hidden'>
-						<div className='w-full h-full flex flex-row items-center justify-start bg-red-600'>
+					<div className='h-[calc(100vh-4rem)] w-full overflow-hidden'>
+						<div className='w-full h-full flex flex-row items-center justify-start'>
 							<Sidebar className={'w-32 h-full'} />
-							<div className='w-[calc(100%-8rem)] h-full bg-violet-600/50'>
+							<div className='w-[calc(100%-8rem)] h-full'>
 								{children}
 							</div>
 						</div>
