@@ -5,6 +5,7 @@ import LiveFeedCard from './LiveFeedCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectTab } from '@/redux/selectedTabSlice'
 import VehicleCard from './VehicleCard'
+import { selectVehicle } from '@/redux/selectedVehicleSlice'
 
 const LiveFeed = ({ className }) => {
     const selectedTab = useSelector((state) => state.selectedTab);
@@ -28,7 +29,7 @@ const LiveFeed = ({ className }) => {
                 }
 
                 {
-                    selectedTab.value === 'Selected' &&
+                    (selectedTab.value === 'Selected' && selectedVehicle.id) &&
                     <VehicleCard className={'w-full h-[calc(100%-6rem)]'} vehicle={allVehiclesData[selectedVehicle.id]} />
                 }
             </div>

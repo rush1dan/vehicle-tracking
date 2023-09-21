@@ -11,6 +11,7 @@ import { setVehicles, updateVehicle, addVehicle, removeVehicle } from '@/redux/a
 import { io } from 'socket.io-client'
 import { MyContext } from '@/redux/MyContext';
 import Loading from '@/components/Loading';
+import { selectVehicle } from '@/redux/selectedVehicleSlice';
 
 let socket;
 
@@ -54,6 +55,7 @@ const PageLoader = ({ className }) => {
         socket.on('remove-vehicle', vehicle => {
             console.log("Client: Detected Vehicle Removal");
             dispatch(removeVehicle(vehicle));
+            dispatch(selectVehicle(null));
         });
     }
 
