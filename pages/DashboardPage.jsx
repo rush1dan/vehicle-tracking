@@ -21,7 +21,7 @@ const DashboardPage = () => {
                         <InfoBox className={'w-40 h-24'} status={'Idle'} vehicleCount={idleVehiclesList.length} />
                     </div>
                     <AddButton />
-                    <VehiclesList className={'w-full'} vehicles={allVehiclesList} />
+                    <VehiclesList className={'w-full h-[32rem]'} vehicles={allVehiclesList} />
                 </div>
             </div>
         </div>
