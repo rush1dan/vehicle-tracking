@@ -1,24 +1,25 @@
-import React from 'react'
-
-import { useDispatch } from 'react-redux';
-import { updateVehicle } from '@/redux/allVehiclesSlice';
-import { selectVehicle } from '@/redux/selectedVehicleSlice';
+import { MyContext } from '@/redux/MyContext';
+import React, { useContext } from 'react'
 
 const locationUpdateDelta = 0.001;
 
 const UpdateForm = ({ className, vehicle }) => {
-    const dispatch = useDispatch();
+
+    const socket = useContext(MyContext);
 
     function updateLatitude(sign) {
         const updatedVehicle = { ...vehicle, lat: (vehicle.lat + sign * locationUpdateDelta) };
-        dispatch(updateVehicle(updatedVehicle));
-        dispatch(selectVehicle(updatedVehicle));
+        socket.emit('vehicle-update', updatedVehicle);
     }
 
     function updateLongitude(sign) {
         const updatedVehicle = { ...vehicle, lon: (vehicle.lon + sign * locationUpdateDelta) };
-        dispatch(updateVehicle(updatedVehicle));
-        dispatch(selectVehicle(updatedVehicle));
+        socket.emit('vehicle-update', updatedVehicle);
+    }
+
+    function updateStatus() {
+        const updatedVehicle = { ...vehicle, status: (vehicle.status === 'moving' ? 'idle' : 'moving') };
+        socket.emit('vehicle-update', updatedVehicle);
     }
 
     return (
@@ -49,11 +50,7 @@ const UpdateForm = ({ className, vehicle }) => {
                         </div>
                     </div>
                     <button className={`px-4 py-4 font-semibold ${vehicle.status == 'idle' ? 'text-green-600' : 'text-red-600'} ${vehicle.status == 'idle' ? 'bg-green-300' : 'bg-red-300'} rounded-md`}
-                        onClick={() => {
-                            const updatedVehicle = { ...vehicle, status: (vehicle.status === 'moving' ? 'idle' : 'moving') };
-                            dispatch(updateVehicle(updatedVehicle));
-                            dispatch(selectVehicle(updatedVehicle));
-                        }}>
+                        onClick={() => updateStatus()}>
                         Change Status
                     </button>
                 </div>

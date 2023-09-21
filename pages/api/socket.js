@@ -1,3 +1,6 @@
+import { Server } from 'socket.io'
+
+//Initial demo data:
 const vehicle_data = {
     "ঢাকা মেট্রো - গ - ১২৩৪": {
         "id": "ঢাকা মেট্রো - গ - ১২৩৪",
@@ -89,7 +92,38 @@ const vehicle_data = {
         "driver": "Olivia Taylor",
         "model": "Hyundai Sonata"
     }
-}
-;
+};
 
-export default vehicle_data;
+const SocketHandler = (req, res) => {
+    if (res.socket.server.io) {
+        console.log('Socket is already running')
+    } else {
+        console.log('Socket is initializing')
+        const io = new Server(res.socket.server, {
+            cors: {
+                origin: "*"
+            }
+        })
+        io.listen(5000);
+        res.socket.server.io = io
+
+        io.on('connection', socket => {
+            console.log('Server: Connection Established');
+
+            socket.on('request-data', () => {
+                console.log('Server: Received Initial Data Request');
+                socket.emit('serve-data', vehicle_data);
+            });
+
+            socket.on('vehicle-update', vehicle => {
+                console.log('Server: Detected Input Change');
+                vehicle_data[vehicle.id] = vehicle;     //Update data on the server for syncing with clients connected later
+                socket.emit('update-vehicle', vehicle)
+                socket.broadcast.emit('update-vehicle', vehicle)
+            });
+        })
+    }
+    res.end()
+}
+
+export default SocketHandler
