@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import UpdateForm from './UpdateForm';
+import Address from './Address';
 
 const VehicleCard = ({ className, vehicle }) => {
 
@@ -39,9 +40,11 @@ const VehicleCard = ({ className, vehicle }) => {
                             <p className='font-bold text-xl'>{vehicle.model}</p>
                             <p className='font-bold text-lg text-slate-600'>{vehicle.id}</p>
                         </div>
-                        <div className='w-64 h-40 bg-sky-950 rounded-md'>
-                        </div>
                         <p className='font-semibold'>Location: {vehicle.lat.toFixed(4)}, {vehicle.lon.toFixed(4)}</p>
+                        <div className='flex flex-row items-center justify-start gap-x-2'>
+                            <p className='font-semibold'>Address: </p>
+                            <Address className={'text-base w-[8.7rem] h-24 flex flex-col items-start justify-center'} latlondata={{ lat: vehicle.lat, lon: vehicle.lon }} selected={true} />
+                        </div>
                         <UpdateForm className={'w-full'} vehicle={vehicle} />
                     </div>
                 </div>

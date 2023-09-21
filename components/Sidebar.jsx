@@ -13,7 +13,7 @@ const Sidebar = ({ className }) => {
                 <div className='w-full h-4'></div>
                 <NavButton classname={'w-full h-32'} title={'Dashboard'} iconSrc={'/dashboard.svg'} />
                 <NavButton classname={'w-full h-32'} title={'Live'} iconSrc={'/locate.svg'} />
-                <NavButton classname={'w-full h-32'} title={'Settings'} iconSrc={'/settings.svg'} />
+                {/* <NavButton classname={'w-full h-32'} title={'Settings'} iconSrc={'/settings.svg'} /> */}
             </div>
         </div>
     )

@@ -28,16 +28,23 @@ async function getReverseGeoCoding(lat, lon) {
 }
 
 const Address = ({ className, latlondata, selected }) => {
-    const [address, setAddress] = useState(`Lat: ${latlondata.lat}, Lon: ${latlondata.lon}`);
+    const [address, setAddress] = useState(`Lat: ${latlondata.lat.toFixed(4)}, Lon: ${latlondata.lon.toFixed(4)}`);
+    const [apiRequestable, setApiRequestable] = useState(true);
     useEffect(() => {
-        if (selected) {
+        if (selected && apiRequestable) {
             const fetchLocation = async () => {
                 const location = await getReverseGeoCoding(latlondata.lat, latlondata.lon);
                 setAddress(location);
             }
             fetchLocation();
+
+            //Since Api allows for maximum 1 request per second
+            setApiRequestable(false);
+            setTimeout(() => {
+                setApiRequestable(true);
+            }, 1000);
         }
-    }, [selected]);
+    }, [selected, latlondata]);
     return (
         <p className={className}>
             {address}
