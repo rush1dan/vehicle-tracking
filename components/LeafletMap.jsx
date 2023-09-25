@@ -25,8 +25,8 @@ const blueMarker = new L.Icon({
 const dhakaLatLang = [23.762, 90.3899];
 
 const MapControls = ({ position }) => {
+    const map = useMap();
     if (position.length > 0) {
-        const map = useMap();
         map.flyTo(position);
     }
 }
