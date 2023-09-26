@@ -102,10 +102,10 @@ const SocketHandler = (req, res) => {
         console.log('Socket is initializing')
         const io = new Server(res.socket.server, {
             cors: {
-                origin: "*"
+                origin: process.env.FRONTEND_URL
             }
         })
-        io.listen(5000);
+        io.listen(process.env.BACKEND_PORT);
         res.socket.server.io = io
 
         io.on('connection', socket => {
