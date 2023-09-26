@@ -34,8 +34,8 @@ const PageLoader = ({ className }) => {
     const socketInitializer = async () => {
         try {
             const res = await fetch('/api/socket');
-            const server_port = process.env.BACKEND_PORT;
-            const server_url = `${process.env.BACKEND_URL}:${server_port}`;
+            const server_port = process.env.NEXT_PUBLIC_BACKEND_PORT;
+            const server_url = `${process.env.NEXT_PUBLIC_BACKEND_URL}:${server_port}`;
             socket = io(server_url);
 
             socket.on('connect', () => {
