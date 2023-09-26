@@ -10,59 +10,103 @@ import { setVehicles, updateVehicle, addVehicle, removeVehicle } from '@/redux/a
 
 import { io } from 'socket.io-client'
 import { MyContext } from '@/redux/MyContext';
-import Loading from '@/components/Loading';
+import StatusComponent, { Status } from '@/components/Status';
 import { selectVehicle } from '@/redux/selectedVehicleSlice';
 
 let socket;
 
 const PageLoader = ({ className }) => {
+    const [status, setStatus] = useState(Status.pending);
+    const [statusMsg, setStatusMsg] = useState('');
     const [isConnected, setIsConnected] = useState(false);
-    const [isDataReceived, setIsDataReceived] = useState(false);
 
     const dispatch = useDispatch();
     useEffect(() => {
         socketInitializer();
     }, []);
 
+    function errorHandler(error) {
+        console.log("error");
+        setStatus(Status.error);
+        setStatusMsg(error.message);
+    }
+
     const socketInitializer = async () => {
-        const res = await fetch('/api/socket');
-        const server_port = 5000;
-        const server_url = `${window.location.protocol}//${window.location.hostname}:${server_port}`;
-        socket = io(server_url);
+        try {
+            const res = await fetch('/api/socket');
+            const server_port = process.env.BACKEND_PORT;
+            const server_url = `${process.env.BACKEND_URL}:${server_port}`;
+            socket = io(server_url);
 
-        socket.on('connect', () => {
-            console.log('connected');
-            setIsConnected(true);
-            socket.emit('request-data');
-        });
+            socket.on('connect', () => {
+                try {
+                    console.log('connected');
+                    setIsConnected(true);
+                    socket.emit('request-data');
+                } catch (error) {
+                    errorHandler(error);
+                }
+            });
 
-        socket.on('serve-data', data => {
-            console.log("Client: Received Initial Data");
-            dispatch(setVehicles(data));
-            setIsDataReceived(true);
-        });
+            socket.on('serve-data', data => {
+                try {
+                    console.log("Client: Received Initial Data");
+                    dispatch(setVehicles(data));
+                    setStatus(Status.success);
+                } catch (error) {
+                    errorHandler(error);
+                }
+            });
 
-        socket.on('update-vehicle', vehicle => {
-            console.log("Client: Detected Vehicle Update");
-            dispatch(updateVehicle(vehicle));
-        });
+            socket.on('update-vehicle', vehicle => {
+                try {
+                    console.log("Client: Detected Vehicle Update");
+                    dispatch(updateVehicle(vehicle));
+                } catch (error) {
+                    errorHandler(error);
+                }
+            });
 
-        socket.on('add-vehicle', vehicle => {
-            console.log("Client: Detected Vehicle Addition");
-            dispatch(addVehicle(vehicle));
-        });
+            socket.on('add-vehicle', vehicle => {
+                try {
+                    console.log("Client: Detected Vehicle Addition");
+                    dispatch(addVehicle(vehicle));
+                } catch (error) {
+                    errorHandler(error);
+                }
+            });
 
-        socket.on('remove-vehicle', vehicle => {
-            console.log("Client: Detected Vehicle Removal");
-            dispatch(removeVehicle(vehicle));
-            dispatch(selectVehicle(null));
-        });
+            socket.on('remove-vehicle', vehicle => {
+                try {
+                    console.log("Client: Detected Vehicle Removal");
+                    dispatch(removeVehicle(vehicle));
+                    dispatch(selectVehicle(null));
+                } catch (error) {
+                    errorHandler(error);
+                }
+            });
+
+
+            socket.on('connect_error', error => {
+                errorHandler(error);
+            });
+
+            socket.on('connect_failed', error => {
+                errorHandler(error);
+            });
+
+            socket.on('disconnect', error => {
+                errorHandler(error);
+            });
+        } catch (error) {
+            errorHandler(error);
+        }
     }
 
     const selectedPage = useSelector((state) => state.selectedPage);
 
-    if (!isConnected || !isDataReceived) {
-        return <Loading className={'w-full h-full text-slate-900'} />
+    if (status !== Status.success) {
+        return <StatusComponent className={'w-full h-full'} status={status} msg={statusMsg} />
     }
 
     return (
@@ -85,5 +129,5 @@ const PageLoader = ({ className }) => {
     )
 }
 
-export {socket}
+export { socket }
 export default PageLoader

@@ -105,7 +105,7 @@ const SocketHandler = (req, res) => {
                 origin: "*"
             }
         })
-        io.listen(5000);
+        io.listen(process.env.BACKEND_PORT);
         res.socket.server.io = io
 
         io.on('connection', socket => {
