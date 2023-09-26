@@ -12,6 +12,7 @@ import { io } from 'socket.io-client'
 import { MyContext } from '@/redux/MyContext';
 import StatusComponent, { Status } from '@/components/Status';
 import { selectVehicle } from '@/redux/selectedVehicleSlice';
+import LoadingDisclaimer from '@/components/LoadingDisclaimer';
 
 let socket;
 
@@ -26,7 +27,6 @@ const PageLoader = ({ className }) => {
     }, []);
 
     function errorHandler(error) {
-        console.log("error");
         setStatus(Status.error);
         setStatusMsg(error.message);
     }
@@ -106,7 +106,12 @@ const PageLoader = ({ className }) => {
     const selectedPage = useSelector((state) => state.selectedPage);
 
     if (status !== Status.success) {
-        return <StatusComponent className={'w-full h-full'} status={status} msg={statusMsg} />
+        return (
+            <div className='w-full h-full flex flex-col items-center justify-center gap-y-6 p-12'>
+                <StatusComponent className={''} status={status} msg={statusMsg} />
+                <LoadingDisclaimer className={'w-full max-w-7xl'} />
+            </div>
+        )
     }
 
     return (
