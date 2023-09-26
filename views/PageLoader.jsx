@@ -33,10 +33,11 @@ const PageLoader = ({ className }) => {
 
     const socketInitializer = async () => {
         try {
-            const res = await fetch('/api/socket');
-            const server_port = process.env.NEXT_PUBLIC_BACKEND_PORT;
-            const server_url = `${process.env.NEXT_PUBLIC_BACKEND_URL}:${server_port}`;
-            socket = io(server_url);
+            const socket_port = process.env.NEXT_PUBLIC_SOCKET_PORT;
+            const server_url = process.env.NEXT_PUBLIC_BACKEND_URL;
+            const app_port = process.env.NEXT_PUBLIC_APP_PORT;
+            const res = await fetch(`${server_url}:${app_port}/api/socket`);
+            socket = io(`${server_url}:${socket_port}`);
 
             socket.on('connect', () => {
                 try {
