@@ -37,7 +37,7 @@ const PageLoader = ({ className }) => {
             const backend_url = process.env.NEXT_PUBLIC_BACKEND_URL;
             const backend_location = backend_url.includes("localhost") ? `${backend_url}:${backend_port}` : backend_url;
             const res = await fetch(`${backend_location}/socket`);
-            socket = io(`${backend_location}:${backend_port}`);
+            socket = io(backend_location);
 
             socket.on('connect', () => {
                 try {

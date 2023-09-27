@@ -1,6 +1,12 @@
+require('dotenv').config();
 
 const express = require('express');
 const app = express();
+const cors = require('cors');
+const corsOptions = {
+    origin: process.env.CORS_ALLOWED_ORIGIN,
+    optionsSuccessStatus: 200
+}
 
 app.get('/', (req, res) => {
     res.send("Express App");
@@ -107,12 +113,14 @@ const vehicle_data = {
 
 const Server = require('socket.io').Server;
 
-app.get('/socket', (req, res) => {
+app.get('/socket', cors(corsOptions), (req, res) => {
     if (res.socket.server.io) {
         console.log('Socket is already running')
     } else {
         console.log('Socket is initializing')
-        const io = new Server(res.socket.server);
+        const io = new Server(res.socket.server, {
+            cors: corsOptions
+        });
         res.socket.server.io = io
 
         io.on('connection', socket => {
@@ -149,7 +157,6 @@ app.get('/socket', (req, res) => {
     res.end();
 });
 
-require('dotenv').config();
 const port = process.env.PORT;
 
 app.listen(port, () => {
