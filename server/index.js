@@ -1,4 +1,20 @@
-import { Server } from 'socket.io'
+require('dotenv').config();
+
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const corsOptions = {
+    origin: process.env.CORS_ALLOWED_ORIGIN,
+    optionsSuccessStatus: 200
+}
+
+app.get('/', (req, res) => {
+    res.send("Express App");
+});
+
+app.get('/healthz', (req, res) => {
+    res.status(200).json('Healthy');
+});
 
 //Initial demo data:
 //Should be obtained from a database in a real-world application
@@ -95,17 +111,16 @@ const vehicle_data = {
     }
 };
 
-const SocketHandler = (req, res) => {
+const Server = require('socket.io').Server;
+
+app.get('/socket', cors(corsOptions), (req, res) => {
     if (res.socket.server.io) {
         console.log('Socket is already running')
     } else {
         console.log('Socket is initializing')
         const io = new Server(res.socket.server, {
-            cors: {
-                origin: process.env.FRONTEND_URL
-            }
-        })
-        io.listen(process.env.SOCKET_PORT);
+            cors: corsOptions
+        });
         res.socket.server.io = io
 
         io.on('connection', socket => {
@@ -140,6 +155,10 @@ const SocketHandler = (req, res) => {
     }
     res.status(200).json('Socket Healthy');
     res.end();
-}
+});
 
-export default SocketHandler
+const port = process.env.PORT;
+
+app.listen(port, () => {
+    console.log(`Server started on port: ${port}`);
+});
