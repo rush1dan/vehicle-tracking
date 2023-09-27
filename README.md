@@ -13,6 +13,9 @@
 
 <div align='center'><h3><a href="https://vehicle-tracking-rush1dan.vercel.app" target="_blank">View Live Demo</a></h3></div>
 
+## About
+This is a full stack vehicle tracking/fleet management app with realtime communication and updates between multiple clients and the server. This app has been built with completely free map tools. It uses **Leaflet.js** as the map library with **Open Street Maps** for the map tiles and **Nominatim** api for Geocoding and Reverse Geocoding locations.
+
 ## Dev
 
 First, run the development servers for the server and client apps:
