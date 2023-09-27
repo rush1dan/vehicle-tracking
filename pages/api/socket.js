@@ -105,7 +105,7 @@ const SocketHandler = (req, res) => {
                 origin: process.env.FRONTEND_URL
             }
         })
-        io.listen(process.env.SOCKET_PORT);
+        //io.listen(process.env.SOCKET_PORT);
         res.socket.server.io = io
 
         io.on('connection', socket => {

@@ -38,7 +38,7 @@ const PageLoader = ({ className }) => {
             const app_port = process.env.NEXT_PUBLIC_APP_PORT;
             const apiLocation = server_url.includes("localhost") ? `${server_url}:${app_port}` : server_url;
             const res = await fetch(`${apiLocation}/api/socket`);
-            socket = io(`${server_url}:${socket_port}`);
+            socket = io(`${server_url}`);
 
             socket.on('connect', () => {
                 try {
