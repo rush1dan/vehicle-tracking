@@ -105,7 +105,7 @@ const SocketHandler = (req, res) => {
                 origin: process.env.FRONTEND_URL
             }
         })
-        io.listen(process.env.BACKEND_PORT);
+        io.listen(process.env.SOCKET_PORT);
         res.socket.server.io = io
 
         io.on('connection', socket => {
@@ -138,7 +138,8 @@ const SocketHandler = (req, res) => {
             });
         })
     }
-    res.end()
+    res.status(200).json('Socket Healthy');
+    res.end();
 }
 
 export default SocketHandler
