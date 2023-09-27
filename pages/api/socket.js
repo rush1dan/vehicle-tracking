@@ -138,7 +138,8 @@ const SocketHandler = (req, res) => {
             });
         })
     }
-    res.end()
+    res.status(200).json('Socket Healthy');
+    res.end();
 }
 
 export default SocketHandler
