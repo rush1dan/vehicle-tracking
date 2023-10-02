@@ -1,4 +1,20 @@
-export default function Register({ className }) {
+'use client'
+
+import { useState } from "react"
+
+export default function RegisterPage() {
+    const initialData = {
+        name: '',
+        email: '',
+        password: ''
+    }
+    const [data, setData] = useState(initialData);
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        console.log(data);
+    }
+
     return (
         <div className='h-screen w-full'>
             <div className="-mt-10 flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -9,7 +25,23 @@ export default function Register({ className }) {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" action="#" method="POST">
+                    <form className="space-y-6" action="#" method="POST" onSubmit={(e) => handleSubmit(e)}>
+                        <div>
+                            <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+                                Name
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    required
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    onChange={(e) => setData({ ...data, name: e.target.value })}
+                                />
+                            </div>
+                        </div>
+
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                 Email address
@@ -22,6 +54,7 @@ export default function Register({ className }) {
                                     autoComplete="email"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    onChange={(e) => setData({ ...data, email: e.target.value })}
                                 />
                             </div>
                         </div>
@@ -38,6 +71,7 @@ export default function Register({ className }) {
                                     autoComplete="current-password"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    onChange={(e) => setData({ ...data, password: e.target.value })}
                                 />
                             </div>
                         </div>
