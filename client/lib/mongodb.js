@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export default async function connectMongoDB() {
+const connectToMongoDB = async () => {
     try {
         await mongoose.connect(process.env.MONGODB_URL);
         console.log("Connected to MongoDB");
@@ -8,3 +8,14 @@ export default async function connectMongoDB() {
         console.error("Error connecting to MongoDB: ", error);
     }
 }
+
+const disconnectFromMongoDB = async () => {
+    try {
+        await mongoose.disconnect();
+        console.log("Disconnected from MongoDB");
+    } catch (error) {
+        console.error("Error disconnecting from MongoDB: ", error);
+    }
+}
+
+export {connectToMongoDB, disconnectFromMongoDB}
