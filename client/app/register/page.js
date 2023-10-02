@@ -1,7 +1,10 @@
 'use client'
 
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useState } from "react"
+import { FetchStatus } from "@/lib/utils";
+import StatusComponent from "@/components/Status";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
     const initialData = {
@@ -10,14 +13,56 @@ export default function RegisterPage() {
         password: ''
     }
     const [data, setData] = useState(initialData);
+    const [fetchState, setFetchState] = useState(FetchStatus.none);
+    const [errorMsg, setErrorMsg] = useState('');
+
+    const router = useRouter();
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setFetchState(FetchStatus.pending);
         try {
             const res = await axios.post('/api/register', data);
             console.log(res.data);
+            setFetchState(FetchStatus.success);
+            router.push('/');
         } catch (error) {
             console.log("Error creating user. ", error);
+            if (error instanceof AxiosError) {      //or use error.name === 'AxiosError'
+                setErrorMsg(error.response.data);
+                setFetchState(FetchStatus.error);
+            } else {
+                setErrorMsg(error.message);
+                setFetchState(FetchStatus.error);
+            }
+        } finally {
+            e.target.reset();
+        }
+    }
+
+    if (fetchState !== FetchStatus.none) {
+        if (fetchState == FetchStatus.pending) {
+            return (
+                <div className="h-screen w-full flex flex-col items-center justify-center">
+                    <StatusComponent className={''} status={FetchStatus.pending} />
+                </div>
+            )
+        }
+
+        if (fetchState == FetchStatus.success) {
+            return (
+                <div className="h-screen w-full flex flex-col items-center justify-center">
+                    <StatusComponent className={''} status={FetchStatus.success} />
+                </div>
+            )
+        }
+
+        if (fetchState == FetchStatus.error) {
+            return (
+                <div className="h-screen w-full flex flex-col items-center justify-center">
+                    <StatusComponent className={''} status={FetchStatus.error} msg={errorMsg} />
+                </div>
+            )
         }
     }
 
