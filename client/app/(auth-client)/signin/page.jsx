@@ -5,10 +5,10 @@ import { useState } from "react"
 import { FetchStatus } from "@/lib/utils";
 import StatusComponent from "@/components/Status";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function RegisterPage() {
     const initialData = {
-        username: '',
         email: '',
         password: ''
     }
@@ -22,10 +22,14 @@ export default function RegisterPage() {
         e.preventDefault();
         setFetchState(FetchStatus.pending);
         try {
-            const res = await axios.post('/api/register', data);
-            console.log(res.data);
-            setFetchState(FetchStatus.success);
-            router.push('/');
+            const res = await signIn('credentials', { redirect: false, email: data.email, password: data.password });
+            console.log(res);
+            if (!res.error) {
+                setFetchState(FetchStatus.success);
+                router.push('/');
+            } else {
+                throw new Error(res.error);
+            }
         } catch (error) {
             console.log("Error creating user. ", error);
             if (error instanceof AxiosError) {      //or use error.name === 'AxiosError'
@@ -71,28 +75,12 @@ export default function RegisterPage() {
             <div className="-mt-10 flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                        Create an account
+                        Sign In
                     </h2>
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     <form className="space-y-6" action="#" method="POST" onSubmit={(e) => handleSubmit(e)}>
-                        <div>
-                            <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-                                UserName
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="username"
-                                    name="username"
-                                    type="text"
-                                    required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    onChange={(e) => setData({ ...data, username: e.target.value })}
-                                />
-                            </div>
-                        </div>
-
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                                 Email address
@@ -132,15 +120,15 @@ export default function RegisterPage() {
                                 type="submit"
                                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
-                                Sign Up
+                                Sign In
                             </button>
                         </div>
                     </form>
 
                     <p className="mt-10 text-center text-sm text-gray-500">
-                        Already have an account?{' '}
-                        <a href="/" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-                            LogIn
+                        Don't have an account?{' '}
+                        <a href="/register" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                            Register
                         </a>
                     </p>
                 </div>
