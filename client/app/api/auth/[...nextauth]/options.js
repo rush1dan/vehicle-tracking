@@ -7,11 +7,6 @@ const authOptions = {
     providers: [
         CredentialsProvider({
             name: 'Credentials',
-            credentials: {
-                email: { label: "Email", type: "email" },
-                password: { label: "Password", type: "password" }
-            },
-
             async authorize(credentials, req) { 
                 const { email, password } = credentials;
 
@@ -31,6 +26,7 @@ const authOptions = {
                     }
                     
                     await disconnectFromMongoDB();
+
                     return user;
                 } catch (error) {
                     console.error(error);
@@ -40,7 +36,27 @@ const authOptions = {
         })
     ],
     session: {
-        strategy: 'jwt'
+        strategy: "jwt",
+    },
+    callbacks: {
+        async jwt({ token, user }) {
+            token.accessToken = token.sub;
+            if (user) {
+                token.username = user.username;
+                token.email = user.email;
+                token.id = user._id;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            if (token) {
+                session.accessToken = token.accessToken;
+                session.user.id = token.id;
+                session.user.username = token.username;
+                session.user.email = token.email;
+            }
+            return session;
+        }
     },
     secret: process.env.NEXTAUTH_SECRET,
     debug: process.env.NODE_ENV === "development",

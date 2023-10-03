@@ -1,13 +1,12 @@
 'use client'
 
-import axios, { AxiosError } from "axios";
 import { useState } from "react"
 import { FetchStatus } from "@/lib/utils";
 import StatusComponent from "@/components/Status";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
-export default function RegisterPage() {
+export default function SignInPage() {
     const initialData = {
         email: '',
         password: ''
@@ -26,19 +25,14 @@ export default function RegisterPage() {
             console.log(res);
             if (!res.error) {
                 setFetchState(FetchStatus.success);
-                router.push('/');
+                router.push('/user');
             } else {
                 throw new Error(res.error);
             }
         } catch (error) {
             console.log("Error creating user. ", error);
-            if (error instanceof AxiosError) {      //or use error.name === 'AxiosError'
-                setErrorMsg(error.response.data);
-                setFetchState(FetchStatus.error);
-            } else {
-                setErrorMsg(error.message);
-                setFetchState(FetchStatus.error);
-            }
+            setErrorMsg(error.message);
+            setFetchState(FetchStatus.error);
         } finally {
             e.target.reset();
         }
