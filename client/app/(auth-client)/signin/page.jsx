@@ -1,12 +1,21 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FetchStatus } from "@/lib/utils";
 import StatusComponent from "@/components/Status";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function SignInPage() {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+    useEffect(() => {
+        if (status === 'authenticated') {
+            router.push('/');
+        }
+    }, [status]);
+
+    
     const initialData = {
         email: '',
         password: ''
@@ -14,8 +23,17 @@ export default function SignInPage() {
     const [data, setData] = useState(initialData);
     const [fetchState, setFetchState] = useState(FetchStatus.none);
     const [errorMsg, setErrorMsg] = useState('');
-
-    const router = useRouter();
+    
+    
+    if (status === 'authenticated') {
+        return null;
+    } else if (status === 'loading') {
+        return (
+            <div className="h-screen w-full flex flex-col items-center justify-center">
+                <StatusComponent status={FetchStatus.pending} />
+            </div>
+        )
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();

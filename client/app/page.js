@@ -1,9 +1,16 @@
 import Topbar from '@/components/Topbar'
 import Sidebar from '@/components/Sidebar'
 import PageLoader from "@/views/PageLoader"
+import { getServerSession } from 'next-auth'
+import authOptions from './api/auth/[...nextauth]/options'
+import SignInPage from '@/views/SignInPage'
 
 
-export default function Home() {
+export default async function Home() {
+	const session = await getServerSession(authOptions);
+	if (!session) {
+		return <SignInPage />
+	}
 	return (
 		<main className="w-full h-full">
 			<Topbar className={'w-screen h-16'} />
