@@ -3,7 +3,7 @@
 import axios, { AxiosError } from "axios";
 import { useState, useEffect } from "react"
 import { FetchStatus } from "@/lib/utils";
-import StatusComponent from "@/components/Status";
+import StatusComponent from "@/components/Common/Status";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 

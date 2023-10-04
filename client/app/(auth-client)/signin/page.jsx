@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { FetchStatus } from "@/lib/utils";
-import StatusComponent from "@/components/Status";
+import StatusComponent from "@/components/Common/Status";
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 

@@ -1,5 +1,5 @@
 import authOptions from '@/app/api/auth/[...nextauth]/options'
-import ClientUserInfo from '@/components/ClientUserInfo';
+import ClientUserInfo from '@/components/ForAuth/ClientUserInfo';
 import { getServerSession } from 'next-auth'
 import React from 'react'
 

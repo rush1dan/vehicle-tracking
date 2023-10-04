@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import React, { useState, useContext } from 'react'
 import { useSelector } from 'react-redux';
-import AddForm from '@/components/AddForm';
+import AddForm from '@/components/ForDashboardPage/AddForm';
 import { MyContext } from '@/redux/MyContext';
-import EditForm from '@/components/EditForm';
+import EditForm from '@/components/ForDashboardPage/EditForm';
 
 const DashboardPage = () => {
     const allVehiclesData = useSelector((state) => state.allVehicles);

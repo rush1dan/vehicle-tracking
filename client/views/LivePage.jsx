@@ -1,8 +1,8 @@
 import React from 'react'
 import dynamic from "next/dynamic";
-import LiveFeedSection from '@/components/LiveFeedSection';
+import LiveFeedSection from '@/components/ForLivePage/LiveFeedSection';
 
-const LeafletMap = dynamic(() => import("@/components/LeafletMap"), { ssr: false });
+const LeafletMap = dynamic(() => import("@/components/ForLivePage/LeafletMap"), { ssr: false });
 
 const LivePage = () => {
     return (

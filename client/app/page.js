@@ -1,5 +1,5 @@
-import Topbar from '@/components/Topbar'
-import Sidebar from '@/components/Sidebar'
+import Topbar from '@/components/Common/Topbar'
+import Sidebar from '@/components/Common/Sidebar'
 import PageLoader from "@/views/PageLoader"
 import { getServerSession } from 'next-auth'
 import authOptions from './api/auth/[...nextauth]/options'
