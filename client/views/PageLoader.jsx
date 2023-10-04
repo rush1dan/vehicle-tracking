@@ -10,9 +10,9 @@ import { setVehicles, updateVehicle, addVehicle, removeVehicle } from '@/redux/a
 
 import { io } from 'socket.io-client'
 import { MyContext } from '@/redux/MyContext';
-import StatusComponent, { Status } from '@/components/Status';
+import StatusComponent, { Status } from '@/components/Common/Status';
 import { selectVehicle } from '@/redux/selectedVehicleSlice';
-import LoadingDisclaimer from '@/components/LoadingDisclaimer';
+import LoadingDisclaimer from '@/components/Common/LoadingDisclaimer';
 
 let socket;
 

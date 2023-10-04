@@ -5,7 +5,6 @@ import LiveFeedCard from './LiveFeedCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectTab } from '@/redux/selectedTabSlice'
 import VehicleCard from './VehicleCard'
-import { selectVehicle } from '@/redux/selectedVehicleSlice'
 
 const LiveFeed = ({ className }) => {
     const selectedTab = useSelector((state) => state.selectedTab);
