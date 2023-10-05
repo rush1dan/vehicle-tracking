@@ -52,4 +52,15 @@ const addVehicle = async (userId, vehicle) => {
     }
 }
 
-module.exports = {connectToMongoDB, disconnectFromMongoDB, getVehicles, addVehicles, addVehicle}
+const removeVehicle = async (vehicle) => {
+    try {
+        const user = await User.findById(vehicle.user);
+        user.vehicles.pull(vehicle._id);
+        await user.save();
+        await Vehicle.findByIdAndDelete(vehicle._id);
+    } catch (error) {
+        console.error("Error removing vehicle from MongoDB: ", error);
+    }
+}
+
+module.exports = {connectToMongoDB, disconnectFromMongoDB, getVehicles, addVehicles, addVehicle, removeVehicle}

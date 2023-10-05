@@ -18,7 +18,7 @@ app.get('/healthz', (req, res) => {
 
 const Server = require('socket.io').Server;
 
-const { getVehicles, connectToMongoDB, addVehicle } = require('./lib/mongodb')
+const { getVehicles, connectToMongoDB, addVehicle, removeVehicle } = require('./lib/mongodb')
 const { processVehiclesListData } = require('./lib/utils');
 
 app.get('/socket', cors(corsOptions), (req, res) => {
@@ -54,9 +54,9 @@ app.get('/socket', cors(corsOptions), (req, res) => {
                 socket.broadcast.emit('add-vehicle', newVehicle);
             });
 
-            socket.on('vehicle-remove', vehicle => {
+            socket.on('vehicle-remove', async (vehicle) => {
                 console.log('Server: Detected Vehicle Removal');
-                delete vehicle_data[vehicle.id];    //Update data on the server for syncing with clients connected later (demo app) :: Update data on the database (real app)
+                await removeVehicle(vehicle);
                 socket.emit('remove-vehicle', vehicle);
                 socket.broadcast.emit('remove-vehicle', vehicle);
             });
