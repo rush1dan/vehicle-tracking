@@ -38,7 +38,7 @@ const VehicleCard = ({ className, vehicle }) => {
                         </div>
                         <div className='w-full flex flex-col items-center justify-start gap-y-3'>
                             <p className='font-bold text-xl'>{vehicle.model}</p>
-                            <p className='font-bold text-lg text-slate-600'>{vehicle.id}</p>
+                            <p className='font-bold text-lg text-slate-600'>{vehicle.number_plate}</p>
                         </div>
                         <p className='font-semibold'>Location: {vehicle.lat.toFixed(4)}, {vehicle.lon.toFixed(4)}</p>
                         <div className='flex flex-row items-center justify-start gap-x-2'>
