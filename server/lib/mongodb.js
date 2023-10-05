@@ -52,6 +52,21 @@ const addVehicle = async (userId, vehicle) => {
     }
 }
 
+const updateVehicle = async (vehicle) => {
+    try {
+        const vehicleToUpdate = await Vehicle.findById(vehicle._id);
+        for (const key in vehicle) {
+            if (key !== '_id') {    //copy all data except the _id without creating new object or assigment
+                vehicleToUpdate[key] = vehicle[key];
+            }
+        }
+        await vehicleToUpdate.save();
+        return vehicleToUpdate;
+    } catch (error) {
+        console.error("Error updating vehicle at MongoDB: ", error);
+    }
+}
+
 const removeVehicle = async (vehicle) => {
     try {
         const user = await User.findById(vehicle.user);
@@ -63,4 +78,4 @@ const removeVehicle = async (vehicle) => {
     }
 }
 
-module.exports = {connectToMongoDB, disconnectFromMongoDB, getVehicles, addVehicles, addVehicle, removeVehicle}
+module.exports = { connectToMongoDB, disconnectFromMongoDB, getVehicles, addVehicles, addVehicle, updateVehicle, removeVehicle }

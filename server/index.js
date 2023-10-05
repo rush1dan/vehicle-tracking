@@ -18,7 +18,7 @@ app.get('/healthz', (req, res) => {
 
 const Server = require('socket.io').Server;
 
-const { getVehicles, connectToMongoDB, addVehicle, removeVehicle } = require('./lib/mongodb')
+const { getVehicles, connectToMongoDB, addVehicle, removeVehicle, updateVehicle } = require('./lib/mongodb')
 const { processVehiclesListData } = require('./lib/utils');
 
 app.get('/socket', cors(corsOptions), (req, res) => {
@@ -40,11 +40,11 @@ app.get('/socket', cors(corsOptions), (req, res) => {
                 socket.emit('serve-data', vehicle_data);
             });
 
-            socket.on('vehicle-update', vehicle => {
-                console.log('Server: Detected Input Change');
-                vehicle_data[vehicle.id] = vehicle;     //Update data on the server for syncing with clients connected later (demo app) :: Update data on the database (real app)
-                socket.emit('update-vehicle', vehicle);
-                socket.broadcast.emit('update-vehicle', vehicle);
+            socket.on('vehicle-update', async (vehicle) => {
+                console.log('Server: Detected Vehicle Update');
+                const updatedVehicle = await updateVehicle(vehicle);
+                socket.emit('update-vehicle', updatedVehicle);
+                socket.broadcast.emit('update-vehicle', updatedVehicle);
             });
 
             socket.on('vehicle-add', async (userId, vehicle) => {
