@@ -66,7 +66,7 @@ const PageLoader = ({ className }) => {
 
             socket.on('serve-data', data => {
                 try {
-                    console.log("Client: Received Initial Data");
+                    console.log(`Client: Received Initial Data`);
                     dispatch(setVehicles(data));
                     setStatus(Status.success);
                 } catch (error) {

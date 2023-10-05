@@ -1,22 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {};
+const initialState = {
+    vehicle_data: {}
+};
 
 export const allVehiclesSlice = createSlice({
 	name: 'allVehicles',
 	initialState,
     reducers: {
         setVehicles: (state, action) => {
-            Object.assign(state, action.payload);
+            state.vehicle_data = action.payload;
         },
 		updateVehicle: (state, action) => {
-            state[action.payload.id] = action.payload;
+            state.vehicle_data[action.payload.id] = action.payload;
         },
         addVehicle: (state, action) => {
-            state[action.payload.id] = action.payload;
+            state.vehicle_data[action.payload.id] = action.payload;
         },
         removeVehicle: (state, action) => {
-            delete state[action.payload.id];
+            delete state.vehicle_data[action.payload.id];
         }
 	},
 })

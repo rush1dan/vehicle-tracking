@@ -6,7 +6,7 @@ import { MyContext } from '@/redux/MyContext';
 import EditForm from '@/components/ForDashboardPage/EditForm';
 
 const DashboardPage = () => {
-    const allVehiclesData = useSelector((state) => state.allVehicles);
+    const allVehiclesData = useSelector((state) => state.allVehicles).vehicle_data;
     const allVehiclesList = Object.values(allVehiclesData);
     const movingVehiclesList = allVehiclesList.filter((vehicle) => vehicle.status === 'moving');
     const idleVehiclesList = allVehiclesList.filter((vehicle) => vehicle.status === 'idle');
