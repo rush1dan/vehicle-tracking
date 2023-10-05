@@ -11,7 +11,7 @@ const SignOutModal = ({ className }) => {
     return (
         <div className={className}>
             <div className='flex flex-col items-center justify-center p-12 bg-neutral-100 shadow-slate-700/10 shadow-lg rounded-lg'>
-                <button className='bg-purple-500 rounded-md w-32 h-12 hover:bg-purple-200' onClick={e => handleSignOut()}>
+                <button className='bg-orange-500 rounded-md w-32 h-12 hover:bg-orange-600' onClick={e => handleSignOut()}>
                     <span className='text-white text-xl font-semibold text'>Sign Out</span>
                 </button>
             </div>

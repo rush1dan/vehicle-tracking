@@ -48,7 +48,7 @@ const EditForm = ({ className, vehicle, close }) => {
                                 onChange={(e) => setData({...data, lon: Number(e.target.value) })} />
                         </div>
                     </div>
-                    <button type='submit' className='mt-8 px-6 py-3 bg-slate-400 hover:bg-slate-500 text-white font-semibold text-lg rounded-lg'>Submit</button>
+                    <button type='submit' className='mt-8 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold text-lg rounded-lg'>Submit</button>
                 </form>
             </div>
         </div>
