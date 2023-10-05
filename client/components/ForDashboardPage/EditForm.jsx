@@ -26,20 +26,6 @@ const EditForm = ({ className, vehicle, close }) => {
                 <form className="w-full h-full flex flex-col items-center justify-start gap-y-4" onSubmit={(e) => handleSubmit(e)}>
                     <p className='font-semibold text-gray-500'>Editing: <span className='text-black'>{vehicle.number_plate}</span></p>
                     {/* Status and Category */}
-                    <div className='flex flex-row items-center justify-center gap-x-8'>
-                        <div className='flex flex-col items-start justify-between'>
-                            <label htmlFor='status' className='font-semibold text-gray-500 px-2 py-1'>Status</label>
-                            <input type='text' id='status' name='status' className='text-base border border-gray-500 rounded-md w-28 p-2' required
-                                defaultValue={vehicle.status} onChange={(e) => setData({...data, status: e.target.value.toLowerCase() })} />
-                        </div>
-                        <div className='flex flex-col items-start justify-between'>
-                            <label htmlFor='category' className='font-semibold text-gray-500 px-2 py-1'>Category</label>
-                            <input type='text' id='category' name='category' className='text-base border border-gray-500 rounded-md w-28 p-2' required
-                                defaultValue={vehicle.category} onChange={(e) => setData({...data, category: e.target.value.toLowerCase() })} />
-                        </div>
-                    </div>
-
-                    {/* Status and Category */}
                     <div className='flex flex-row items-center justify-center gap-x-8 mt-2'>
                         <Dropdown className={'w-28 h-10'} title={'Status'} forceUseTitle={false} options={['Idle', 'Moving']} defaultOption={vehicle.status}
                             setOption={(option) => setData({ ...data, status: option.toLowerCase() })} />

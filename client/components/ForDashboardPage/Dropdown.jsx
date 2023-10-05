@@ -28,7 +28,7 @@ const Dropdown = ({ className, title, forceUseTitle, options, defaultOption, set
                             options.map((option, index) => {
                                 return (
                                     <li key={option}>
-                                        <button className="block w-full py-2 hover:bg-gray-600 hover:text-white"
+                                        <button className="block w-full py-2 hover:bg-gray-600 hover:text-white" type='button'
                                             onClick={e => { setOption(option); setThisOption(option); setOpen(false); }}>{option}</button>
                                     </li>
                                 )
