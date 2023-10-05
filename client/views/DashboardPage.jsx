@@ -130,7 +130,7 @@ const VehiclesListItem = ({ className, vehicle }) => {
                     </div>
                     <div className='grow flex flex-col justify-between items-start'>
                         <p className='md:text-base text-sm'>{vehicle.model}</p>
-                        <p className='md:text-base text-sm'>{vehicle.id}</p>
+                        <p className='md:text-base text-sm'>{vehicle.number_plate}</p>
                         {/* <Address className={'text-xs'} latlondata={{ lat: vehicle.lat, lon: vehicle.lon }} selected={isSelected} /> */}
                         <div className={`w-16 h-6 rounded-md flex justify-center items-center ${vehicle.status == 'moving' ? 'bg-green-300' : 'bg-red-300'}`}>
                             <p className={`${vehicle.status == 'moving' ? 'text-green-600' : 'text-red-600'} 

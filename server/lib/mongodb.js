@@ -46,6 +46,7 @@ const addVehicle = async (userId, vehicle) => {
         await user.save();
         newVehicle.user = user;
         await newVehicle.save();
+        return newVehicle;
     } catch (error) {
         console.error("Error adding vehicle to MongoDB: ", error);
     }

@@ -12,13 +12,13 @@ export const allVehiclesSlice = createSlice({
             state.vehicle_data = action.payload;
         },
 		updateVehicle: (state, action) => {
-            state.vehicle_data[action.payload.id] = action.payload;
+            state.vehicle_data[action.payload._id] = action.payload;
         },
         addVehicle: (state, action) => {
-            state.vehicle_data[action.payload.id] = action.payload;
+            state.vehicle_data[action.payload._id] = action.payload;
         },
         removeVehicle: (state, action) => {
-            delete state.vehicle_data[action.payload.id];
+            delete state.vehicle_data[action.payload._id];
         }
 	},
 })

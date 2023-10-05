@@ -3,13 +3,16 @@
 import Image from 'next/image'
 import React, { useRef, useState, useContext } from 'react'
 import { MyContext } from '@/redux/MyContext'
+import { useSession } from 'next-auth/react'
 
 const AddForm = ({ className, close }) => {
     const formRef = useRef(null);
 
     const socket = useContext(MyContext);
+    const { data: session, status: sessionStatus } = useSession();
+    const userId = session?.user?.id;
 
-    const [id, setId] = useState('');
+    const [number_plate, setNumberPlate] = useState('');
     const [model, setModel] = useState('');
     const [status, setStatus] = useState('idle');
     const [category, setCategory] = useState('car');
@@ -19,14 +22,14 @@ const AddForm = ({ className, close }) => {
     function handleSubmit(e) {
         e.preventDefault();
         const newVehicle = {
-            'id': id,
+            'number_plate': number_plate,
             'lat': Number(lat),
             'lon': Number(lon),
             'status': status,
             'category': category,
             'model': model
         }
-        socket.emit('vehicle-add', newVehicle);
+        socket.emit('vehicle-add', userId, newVehicle);
         formRef.current?.reset();
         close();
     }
@@ -41,9 +44,9 @@ const AddForm = ({ className, close }) => {
                     {/* Id and Model */}
                     <div className='flex flex-row items-center justify-center gap-x-8'>
                         <div className='flex flex-col items-start justify-between'>
-                            <label htmlFor='id' className='font-semibold text-gray-500 px-2 py-1'>Id</label>
-                            <input type='text' id='id' name='id' className='text-base border border-gray-500 rounded-md w-28 p-2' required
-                                onChange={(e) => setId(e.target.value)} />
+                            <label htmlFor='number_plate' className='font-semibold text-gray-500 px-2 py-1'>Number Plate</label>
+                            <input type='text' id='number_plate' name='number_plate' className='text-base border border-gray-500 rounded-md w-28 p-2' required
+                                onChange={(e) => setNumberPlate(e.target.value)} />
                         </div>
                         <div className='flex flex-col items-start justify-between'>
                             <label htmlFor='model' className='font-semibold text-gray-500 px-2 py-1'>Model</label>
@@ -57,12 +60,12 @@ const AddForm = ({ className, close }) => {
                         <div className='flex flex-col items-start justify-between'>
                             <label htmlFor='id' className='font-semibold text-gray-500 px-2 py-1'>Status</label>
                             <input type='text' id='id' name='id' className='text-base border border-gray-500 rounded-md w-28 p-2' required
-                                placeholder={'Idle'} onChange={(e) => setStatus(e.target.value.toLowerCase())} />
+                                placeholder={'Idle'} defaultValue={'idle'} onChange={(e) => setStatus(e.target.value.toLowerCase())} />
                         </div>
                         <div className='flex flex-col items-start justify-between'>
                             <label htmlFor='model' className='font-semibold text-gray-500 px-2 py-1'>Category</label>
                             <input type='text' id='model' name='model' className='text-base border border-gray-500 rounded-md w-28 p-2' required
-                                placeholder={'Car'} onChange={(e) => setCategory(e.target.value.toLowerCase())} />
+                                placeholder={'Car'} defaultValue={'car'} onChange={(e) => setCategory(e.target.value.toLowerCase())} />
                         </div>
                     </div>
 

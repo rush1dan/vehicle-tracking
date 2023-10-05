@@ -10,7 +10,7 @@ const LiveFeed = ({ className }) => {
     const selectedTab = useSelector((state) => state.selectedTab);
     const selectedVehicle = useSelector((state) => state.selectedVehicle);
 
-    const allVehiclesData = useSelector((state) => state.allVehicles);
+    const allVehiclesData = useSelector((state) => state.allVehicles).vehicle_data;
     const allVehiclesList = Object.values(allVehiclesData);
     const movingVehicles = allVehiclesList.filter((vehicle) => vehicle.status === 'moving');
     const idleVehicles = allVehiclesList.filter((vehicle) => vehicle.status === 'idle');
@@ -80,7 +80,7 @@ const CardList = ({ className, vehicles }) => {
                 {
                     vehicles.map((vehicle, index) => {
                         return (
-                            <div key={vehicle.id} className='w-full'>
+                            <div key={vehicle._id} className='w-full'>
                                 <LiveFeedCard className={'w-full h-20'} vehicle={vehicle} />
                             </div>
                         )

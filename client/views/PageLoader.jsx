@@ -83,7 +83,7 @@ const PageLoader = ({ className }) => {
                 }
             });
 
-            socket.on('add-vehicle', vehicle => {
+            socket.on('add-vehicle', (vehicle) => {
                 try {
                     console.log("Client: Detected Vehicle Addition");
                     dispatch(addVehicle(vehicle));
