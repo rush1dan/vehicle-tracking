@@ -68,6 +68,7 @@ const PageLoader = ({ className }) => {
                 try {
                     console.log(`Client: Received Initial Data`);
                     dispatch(setVehicles(data));
+                    dispatch(selectVehicle(null));
                     setStatus(Status.success);
                 } catch (error) {
                     errorHandler(error);
