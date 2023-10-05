@@ -14,24 +14,40 @@ import StatusComponent, { Status } from '@/components/Common/Status';
 import { selectVehicle } from '@/redux/selectedVehicleSlice';
 import LoadingDisclaimer from '@/components/Common/LoadingDisclaimer';
 
+import { useSession } from 'next-auth/react';
+import { connect, disconnect } from '@/redux/connectionSlice';
+
 let socket;
 
 const PageLoader = ({ className }) => {
-    const [status, setStatus] = useState(Status.pending);
+    const [fetchStatus, setStatus] = useState(Status.pending);
     const [statusMsg, setStatusMsg] = useState('');
-    const [isConnected, setIsConnected] = useState(false);
+
+    const { data: session, status } = useSession();
+    const userId = session?.user?.id;
+
+    const connected = useSelector((state) => state.connected);      //useState wont work as it doesn't maintain state on page routing
 
     const dispatch = useDispatch();
     useEffect(() => {
-        socketInitializer();
-    }, []);
+        if (status === 'authenticated') {
+            if (!connected.value) {
+                socketInitializer(userId);
+            }
+        } else if (status === 'unauthenticated') {
+            if (connected.value) {
+                socket?.disconnect();
+                dispatch(disconnect());
+            }
+        }
+    }, [status, userId]);
 
     function errorHandler(error) {
         setStatus(Status.error);
         setStatusMsg(error.message);
     }
 
-    const socketInitializer = async () => {
+    const socketInitializer = async (userId) => {
         try {
             const backend_port = process.env.NEXT_PUBLIC_BACKEND_PORT;
             const backend_url = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -41,9 +57,8 @@ const PageLoader = ({ className }) => {
 
             socket.on('connect', () => {
                 try {
-                    console.log('connected');
-                    setIsConnected(true);
-                    socket.emit('request-data');
+                    dispatch(connect());
+                    socket.emit('request-data', userId);
                 } catch (error) {
                     errorHandler(error);
                 }
@@ -97,6 +112,7 @@ const PageLoader = ({ className }) => {
             });
 
             socket.on('disconnect', error => {
+                console.log("Disconnected From Socket");
                 errorHandler(error);
             });
         } catch (error) {
@@ -106,10 +122,10 @@ const PageLoader = ({ className }) => {
 
     const selectedPage = useSelector((state) => state.selectedPage);
 
-    if (status !== Status.success) {
+    if (fetchStatus !== Status.success) {
         return (
             <div className='w-full h-full flex flex-col items-center justify-center gap-y-6 p-12'>
-                <StatusComponent className={''} status={status} msg={statusMsg} />
+                <StatusComponent className={''} status={fetchStatus} msg={statusMsg} />
                 <LoadingDisclaimer className={'w-full max-w-7xl'} />
             </div>
         )

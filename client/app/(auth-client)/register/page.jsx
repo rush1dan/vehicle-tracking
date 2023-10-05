@@ -6,6 +6,7 @@ import { FetchStatus } from "@/lib/utils";
 import StatusComponent from "@/components/Common/Status";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function RegisterPage() {
     const { data: session, status } = useSession();
@@ -157,9 +158,9 @@ export default function RegisterPage() {
 
                     <p className="mt-10 text-center text-sm text-gray-500">
                         Already have an account?{' '}
-                        <a href="/signin" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                        <Link href="/signin" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                             LogIn
-                        </a>
+                        </Link>
                     </p>
                 </div>
             </div>

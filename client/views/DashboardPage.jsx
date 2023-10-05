@@ -86,7 +86,7 @@ const VehiclesList = ({ className, vehicles }) => {
                 {
                     vehicles.map((vehicle, index) => {
                         return (
-                            <div key={vehicle.id} className='w-full'>
+                            <div key={vehicle._id} className='w-full'>
                                 <VehiclesListItem className={'w-full h-28'} vehicle={vehicle} />
                             </div>
                         )

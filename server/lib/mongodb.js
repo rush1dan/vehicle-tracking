@@ -22,7 +22,8 @@ const disconnectFromMongoDB = async () => {
 
 const getVehicles = async (userId) => {
     try {
-        const vehicles = await Vehicle.find({ user: userId });
+        const user = await User.findById(userId);
+        const vehicles = await Vehicle.find({ user: user });
         return vehicles;
     } catch (error) {
         console.error("Error retrieving vehicle list from MongoDB: ", error);
@@ -50,4 +51,4 @@ const addVehicle = async (userId, vehicle) => {
     }
 }
 
-module.exports = {connectToMongoDB, disconnectFromMongoDB, addVehicles, addVehicle}
+module.exports = {connectToMongoDB, disconnectFromMongoDB, getVehicles, addVehicles, addVehicle}
