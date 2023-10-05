@@ -79,9 +79,10 @@ const CardList = ({ className, vehicles }) => {
             <div className='w-full h-full px-4 md:py-4 flex flex-col items-start gap-y-4 overflow-y-auto'>
                 {
                     vehicles.map((vehicle, index) => {
+                        const vehicle_rev = vehicles[vehicles.length - index - 1];      //to put newly added vehicle up top with O(n)
                         return (
-                            <div key={vehicle._id} className='w-full'>
-                                <LiveFeedCard className={'w-full h-20'} vehicle={vehicle} />
+                            <div key={vehicle_rev._id} className='w-full'>
+                                <LiveFeedCard className={'w-full h-20'} vehicle={vehicle_rev} />
                             </div>
                         )
                     })
