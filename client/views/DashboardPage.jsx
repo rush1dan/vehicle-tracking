@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import React, { useState, useContext } from 'react'
 import { useSelector } from 'react-redux';
-import AddForm from '@/components/AddForm';
+import AddForm from '@/components/ForDashboardPage/AddForm';
 import { MyContext } from '@/redux/MyContext';
-import EditForm from '@/components/EditForm';
+import EditForm from '@/components/ForDashboardPage/EditForm';
 
 const DashboardPage = () => {
-    const allVehiclesData = useSelector((state) => state.allVehicles);
+    const allVehiclesData = useSelector((state) => state.allVehicles).vehicle_data;
     const allVehiclesList = Object.values(allVehiclesData);
     const movingVehiclesList = allVehiclesList.filter((vehicle) => vehicle.status === 'moving');
     const idleVehiclesList = allVehiclesList.filter((vehicle) => vehicle.status === 'idle');
@@ -67,7 +67,7 @@ const AddButton = () => {
     const [formOpen, setFormOpen] = useState(false);
     return (
         <>
-            <button className={`px-8 py-4 rounded-lg text-2xl text-white font-semibold tracking-wider bg-blue-400 hover:bg-blue-500 ${formOpen ? 'invisible' : 'visible'}`}
+            <button className={`px-8 py-4 rounded-lg text-2xl text-white font-semibold tracking-wider bg-blue-500 hover:bg-blue-600 ${formOpen ? 'invisible' : 'visible'}`}
                 onClick={() => setFormOpen(true)}>
                 ADD
             </button>
@@ -85,9 +85,10 @@ const VehiclesList = ({ className, vehicles }) => {
             <div className='w-full h-full px-4 md:py-4 flex flex-col items-start gap-y-4'>
                 {
                     vehicles.map((vehicle, index) => {
+                        const vehicle_rev = vehicles[vehicles.length - index - 1];      //to put newly added vehicle up top with O(n)
                         return (
-                            <div key={vehicle.id} className='w-full'>
-                                <VehiclesListItem className={'w-full h-28'} vehicle={vehicle} />
+                            <div key={vehicle_rev._id} className='w-full'>
+                                <VehiclesListItem className={'w-full h-28'} vehicle={vehicle_rev} />
                             </div>
                         )
                     })
@@ -130,7 +131,7 @@ const VehiclesListItem = ({ className, vehicle }) => {
                     </div>
                     <div className='grow flex flex-col justify-between items-start'>
                         <p className='md:text-base text-sm'>{vehicle.model}</p>
-                        <p className='md:text-base text-sm'>{vehicle.id}</p>
+                        <p className='md:text-base text-sm'>{vehicle.number_plate}</p>
                         {/* <Address className={'text-xs'} latlondata={{ lat: vehicle.lat, lon: vehicle.lon }} selected={isSelected} /> */}
                         <div className={`w-16 h-6 rounded-md flex justify-center items-center ${vehicle.status == 'moving' ? 'bg-green-300' : 'bg-red-300'}`}>
                             <p className={`${vehicle.status == 'moving' ? 'text-green-600' : 'text-red-600'} 
@@ -138,11 +139,11 @@ const VehiclesListItem = ({ className, vehicle }) => {
                         </div>
                     </div>
                     <div className={`h-full flex flex-col justify-center items-center gap-y-2 ${formOpen ? 'invisible' : 'visible'}`}>
-                        <button className='md:w-24 w-14 py-2 bg-blue-500 hover:bg-blue-600 text-blue-950 rounded-md font-semibold md:text-base text-xs'
+                        <button className='md:w-24 w-14 py-2 bg-blue-500 hover:bg-blue-600 text-blue-900 rounded-md font-semibold md:text-base text-xs'
                             onClick={() => setFormOpen(true)}>
                             Edit
                         </button>
-                        <button className='md:w-24 w-14 py-2 bg-red-500 hover:bg-red-600 text-red-950 rounded-md font-semibold md:text-base text-xs'
+                        <button className='md:w-24 w-14 py-2 bg-red-500 hover:bg-red-600 text-red-900 rounded-md font-semibold md:text-base text-xs'
                             onClick={() => removeVehicle(vehicle)}>
                             Remove
                         </button>

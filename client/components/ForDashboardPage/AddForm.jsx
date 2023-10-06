@@ -1,33 +1,35 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useRef, useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { MyContext } from '@/redux/MyContext'
+import { useSession } from 'next-auth/react'
+import Dropdown from './Dropdown'
 
 const AddForm = ({ className, close }) => {
-    const formRef = useRef(null);
-
     const socket = useContext(MyContext);
+    const { data: session, status: sessionStatus } = useSession();
+    const userId = session?.user?.id;
 
-    const [id, setId] = useState('');
+    const [number_plate, setNumberPlate] = useState('');
     const [model, setModel] = useState('');
-    const [status, setStatus] = useState('idle');
-    const [category, setCategory] = useState('car');
+    const [status, setStatus] = useState('Idle');
+    const [category, setCategory] = useState('Car');
     const [lat, setLat] = useState(0);
     const [lon, setLon] = useState(0);
 
     function handleSubmit(e) {
         e.preventDefault();
         const newVehicle = {
-            'id': id,
+            'number_plate': number_plate,
             'lat': Number(lat),
             'lon': Number(lon),
-            'status': status,
-            'category': category,
+            'status': status.toLowerCase(),
+            'category': category.toLocaleLowerCase(),
             'model': model
         }
-        socket.emit('vehicle-add', newVehicle);
-        formRef.current?.reset();
+        socket.emit('vehicle-add', userId, newVehicle);
+        e.target.reset();   //this is the form
         close();
     }
 
@@ -37,13 +39,13 @@ const AddForm = ({ className, close }) => {
                 <button className='w-8 h-8 absolute top-8 right-8 translate-x-1/2 -translate-y-1/2' onClick={() => close()}>
                     <Image src='/x.svg' alt='cross' fill />
                 </button>
-                <form className="w-full h-full flex flex-col items-center justify-start gap-y-4" onSubmit={(e) => handleSubmit(e)} ref={formRef}>
+                <form className="w-full h-full flex flex-col items-center justify-start gap-y-4" onSubmit={(e) => handleSubmit(e)}>
                     {/* Id and Model */}
                     <div className='flex flex-row items-center justify-center gap-x-8'>
                         <div className='flex flex-col items-start justify-between'>
-                            <label htmlFor='id' className='font-semibold text-gray-500 px-2 py-1'>Id</label>
-                            <input type='text' id='id' name='id' className='text-base border border-gray-500 rounded-md w-28 p-2' required
-                                onChange={(e) => setId(e.target.value)} />
+                            <label htmlFor='number_plate' className='font-semibold text-gray-500 px-2 py-1'>Number Plate</label>
+                            <input type='text' id='number_plate' name='number_plate' className='text-base border border-gray-500 rounded-md w-28 p-2' required
+                                onChange={(e) => setNumberPlate(e.target.value)} />
                         </div>
                         <div className='flex flex-col items-start justify-between'>
                             <label htmlFor='model' className='font-semibold text-gray-500 px-2 py-1'>Model</label>
@@ -53,17 +55,11 @@ const AddForm = ({ className, close }) => {
                     </div>
 
                     {/* Status and Category */}
-                    <div className='flex flex-row items-center justify-center gap-x-8'>
-                        <div className='flex flex-col items-start justify-between'>
-                            <label htmlFor='id' className='font-semibold text-gray-500 px-2 py-1'>Status</label>
-                            <input type='text' id='id' name='id' className='text-base border border-gray-500 rounded-md w-28 p-2' required
-                                placeholder={'Idle'} onChange={(e) => setStatus(e.target.value.toLowerCase())} />
-                        </div>
-                        <div className='flex flex-col items-start justify-between'>
-                            <label htmlFor='model' className='font-semibold text-gray-500 px-2 py-1'>Category</label>
-                            <input type='text' id='model' name='model' className='text-base border border-gray-500 rounded-md w-28 p-2' required
-                                placeholder={'Car'} onChange={(e) => setCategory(e.target.value.toLowerCase())} />
-                        </div>
+                    <div className='flex flex-row items-center justify-center gap-x-8 mt-2'>
+                        <Dropdown className={'w-28 h-10'} title={'Status'} forceUseTitle={true} options={['Idle', 'Moving']} defaultOption={'Idle'}
+                            setOption={(option) => setStatus(option)} />
+                        <Dropdown className={'w-28 h-10'} title={'Category'} forceUseTitle={true} options={['Car', 'Bus', 'Truck']} defaultOption={'Car'}
+                            setOption={(option) => setCategory(option)} />
                     </div>
 
                     {/* Lat and Lon */}
@@ -79,7 +75,7 @@ const AddForm = ({ className, close }) => {
                                 onChange={(e) => setLon(e.target.value)} />
                         </div>
                     </div>
-                    <button type='submit' className='mt-8 px-6 py-3 bg-slate-400 hover:bg-slate-500 text-white font-semibold text-lg rounded-lg'>Submit</button>
+                    <button type='submit' className='mt-8 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-semibold text-lg rounded-lg'>Submit</button>
                 </form>
             </div>
         </div>

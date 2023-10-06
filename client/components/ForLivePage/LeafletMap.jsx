@@ -35,21 +35,21 @@ const LeafletMap = ({ className }) => {
     const [isMounted, setIsMounted] = useState(false);
     const [viewPos, setViewPos] = useState([]);
 
-    const allVehiclesData = useSelector((state) => state.allVehicles);
+    const allVehiclesData = useSelector((state) => state.allVehicles).vehicle_data;
     const allVehiclesList = Object.values(allVehiclesData);
     
     const selectedVehicle = useSelector((state) => state.selectedVehicle);
     useEffect(() => {
-        if (selectedVehicle.id) {
-            const vehicle = allVehiclesData[selectedVehicle.id];
+        if (selectedVehicle._id) {
+            const vehicle = allVehiclesData[selectedVehicle._id];
             setViewPos([vehicle.lat, vehicle.lon]);
         }
-    }, [selectedVehicle.id]);
+    }, [selectedVehicle._id]);
 
     const dispatch = useDispatch();
     function clickVehicle(vehicle, position) {
         setViewPos(position);
-        dispatch(selectVehicle(vehicle.id));
+        dispatch(selectVehicle(vehicle._id));
     }
 
     useEffect(() => {
@@ -60,7 +60,7 @@ const LeafletMap = ({ className }) => {
     }
 
     return (
-        <div className={`${className} relative`}>
+        <div className={`${className} relative -z-10`}>
             <MapContainer center={dhakaLatLang} zoom={13} scrollWheelZoom={true} className='w-full h-full'>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -70,14 +70,14 @@ const LeafletMap = ({ className }) => {
                     allVehiclesList.map((vehicle, index) => {
                         const markerPos = [vehicle.lat, vehicle.lon];
                         return (
-                            <Marker key={index} position={markerPos} icon={vehicle.id === selectedVehicle.id ? blueMarker : (vehicle.status == 'moving' ? greenMarker : redMarker)}
+                            <Marker key={vehicle._id} position={markerPos} icon={vehicle._id === selectedVehicle._id ? blueMarker : (vehicle.status == 'moving' ? greenMarker : redMarker)}
                                 eventHandlers={{
                                     click: () => {
                                         clickVehicle(vehicle, markerPos);
                                     },
                                 }}>
                                 <Popup>
-                                    {vehicle.model} <br /> {vehicle.id}
+                                    {vehicle.model} <br /> {vehicle.number_plate}
                                 </Popup>
                             </Marker>
                         )

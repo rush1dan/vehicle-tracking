@@ -5,13 +5,12 @@ import LiveFeedCard from './LiveFeedCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectTab } from '@/redux/selectedTabSlice'
 import VehicleCard from './VehicleCard'
-import { selectVehicle } from '@/redux/selectedVehicleSlice'
 
 const LiveFeed = ({ className }) => {
     const selectedTab = useSelector((state) => state.selectedTab);
     const selectedVehicle = useSelector((state) => state.selectedVehicle);
 
-    const allVehiclesData = useSelector((state) => state.allVehicles);
+    const allVehiclesData = useSelector((state) => state.allVehicles).vehicle_data;
     const allVehiclesList = Object.values(allVehiclesData);
     const movingVehicles = allVehiclesList.filter((vehicle) => vehicle.status === 'moving');
     const idleVehicles = allVehiclesList.filter((vehicle) => vehicle.status === 'idle');
@@ -29,8 +28,8 @@ const LiveFeed = ({ className }) => {
                 }
 
                 {
-                    (selectedTab.value === 'Selected' && selectedVehicle.id) &&
-                    <VehicleCard className={'w-full h-[calc(100%-6rem)]'} vehicle={allVehiclesData[selectedVehicle.id]} />
+                    (selectedTab.value === 'Selected' && selectedVehicle._id) &&
+                    <VehicleCard className={'w-full h-[calc(100%-6rem)]'} vehicle={allVehiclesData[selectedVehicle._id]} />
                 }
             </div>
         </div>
@@ -80,9 +79,10 @@ const CardList = ({ className, vehicles }) => {
             <div className='w-full h-full px-4 md:py-4 flex flex-col items-start gap-y-4 overflow-y-auto'>
                 {
                     vehicles.map((vehicle, index) => {
+                        const vehicle_rev = vehicles[vehicles.length - index - 1];      //to put newly added vehicle up top with O(n)
                         return (
-                            <div key={vehicle.id} className='w-full'>
-                                <LiveFeedCard className={'w-full h-20'} vehicle={vehicle} />
+                            <div key={vehicle_rev._id} className='w-full'>
+                                <LiveFeedCard className={'w-full h-20'} vehicle={vehicle_rev} />
                             </div>
                         )
                     })

@@ -16,102 +16,10 @@ app.get('/healthz', (req, res) => {
     res.status(200).json('Healthy');
 });
 
-//Initial demo data:
-//Should be obtained from a database in a real-world application
-const vehicle_data = {
-    "ঢাকা মেট্রো - গ - ১২৩৪": {
-        "id": "ঢাকা মেট্রো - গ - ১২৩৪",
-        "lat": 23.8103,
-        "lon": 90.4125,
-        "status": "idle",
-        "category": "car",
-        "driver": "John Doe",
-        "model": "Toyota Corolla"
-    },
-    "ঢাকা মেট্রো - ক - ৫৬৭৮": {
-        "id": "ঢাকা মেট্রো - ক - ৫৬৭৮",
-        "lat": 23.7925,
-        "lon": 90.4078,
-        "status": "moving",
-        "category": "bus",
-        "driver": "Alice Smith",
-        "model": "Volvo XC90"
-    },
-    "ঢাকা মেট্রো - ঘ - ৯০১২": {
-        "id": "ঢাকা মেট্রো - ঘ - ৯০১২",
-        "lat": 23.7639,
-        "lon": 90.4133,
-        "status": "idle",
-        "category": "truck",
-        "driver": "Bob Johnson",
-        "model": "Ford F-150"
-    },
-    "ঢাকা মেট্রো - খ - ৩৪৫৬": {
-        "id": "ঢাকা মেট্রো - খ - ৩৪৫৬",
-        "lat": 23.7540,
-        "lon": 90.3660,
-        "status": "moving",
-        "category": "car",
-        "driver": "Eva Brown",
-        "model": "Honda Civic"
-    },
-    "ঢাকা মেট্রো - চ - ৭৮৯০": {
-        "id": "ঢাকা মেট্রো - চ - ৭৮৯০",
-        "lat": 23.7465,
-        "lon": 90.3760,
-        "status": "idle",
-        "category": "bus",
-        "driver": "David Wilson",
-        "model": "Mercedes-Benz Sprinter"
-    },
-    "ঢাকা মেট্রো - গ - ২৯৪৫": {
-        "id": "ঢাকা মেট্রো - গ - ২৯৪৫",
-        "lat": 23.7375,
-        "lon": 90.4133,
-        "status": "moving",
-        "category": "truck",
-        "driver": "Grace Lee",
-        "model": "Chevrolet Silverado"
-    },
-    "ঢাকা মেট্রো - ঙ - ৫৪৩২": {
-        "id": "ঢাকা মেট্রো - ঙ - ৫৪৩২",
-        "lat": 23.7558,
-        "lon": 90.3577,
-        "status": "idle",
-        "category": "car",
-        "driver": "Frank White",
-        "model": "Nissan Altima"
-    },
-    "ঢাকা মেট্রো - ক - ৬৫৪৩": {
-        "id": "ঢাকা মেট্রো - ক - ৬৫৪৩",
-        "lat": 23.7895,
-        "lon": 90.4028,
-        "status": "moving",
-        "category": "bus",
-        "driver": "Hannah Davis",
-        "model": "Ford Transit"
-    },
-    "ঢাকা মেট্রো - গ - ৭৬৫৪": {
-        "id": "ঢাকা মেট্রো - গ - ৭৬৫৪",
-        "lat": 23.7712,
-        "lon": 90.4115,
-        "status": "idle",
-        "category": "truck",
-        "driver": "James Smith",
-        "model": "Chevrolet Colorado"
-    },
-    "ঢাকা মেট্রো - চ - ৮৭৬৫": {
-        "id": "ঢাকা মেট্রো - চ - ৮৭৬৫",
-        "lat": 23.7974,
-        "lon": 90.3549,
-        "status": "moving",
-        "category": "car",
-        "driver": "Olivia Taylor",
-        "model": "Hyundai Sonata"
-    }
-};
-
 const Server = require('socket.io').Server;
+
+const { getVehicles, connectToMongoDB, addVehicle, removeVehicle, updateVehicle } = require('./lib/mongodb')
+const { processVehiclesListData } = require('./lib/utils');
 
 app.get('/socket', cors(corsOptions), (req, res) => {
     if (res.socket.server.io) {
@@ -126,30 +34,32 @@ app.get('/socket', cors(corsOptions), (req, res) => {
         io.on('connection', socket => {
             console.log('Server: Connection Established');
 
-            socket.on('request-data', () => {
-                console.log('Server: Received Initial Data Request');
+            socket.on('request-data', async (userId) => {
+                console.log('Server: Received Initial Data Request From User: ', userId);
+                const vehicle_data = processVehiclesListData(await getVehicles(userId));
+                socket.join(userId);    //for bradcasting to only room with the provided userId
                 socket.emit('serve-data', vehicle_data);
             });
 
-            socket.on('vehicle-update', vehicle => {
-                console.log('Server: Detected Input Change');
-                vehicle_data[vehicle.id] = vehicle;     //Update data on the server for syncing with clients connected later (demo app) :: Update data on the database (real app)
-                socket.emit('update-vehicle', vehicle);
-                socket.broadcast.emit('update-vehicle', vehicle);
+            socket.on('vehicle-update', async (vehicle) => {
+                console.log('Server: Detected Vehicle Update');
+                const updatedVehicle = await updateVehicle(vehicle);
+                socket.emit('update-vehicle', updatedVehicle);
+                socket.to(updatedVehicle.user.toString()).emit('update-vehicle', updatedVehicle);   //broadcasting to room with all users with same userId i.e. same account
             });
 
-            socket.on('vehicle-add', vehicle => {
+            socket.on('vehicle-add', async (userId, vehicle) => {
                 console.log('Server: Detected Vehicle Addition');
-                vehicle_data[vehicle.id] = vehicle;     //Update data on the server for syncing with clients connected later (demo app) :: Update data on the database (real app)
-                socket.emit('add-vehicle', vehicle);
-                socket.broadcast.emit('add-vehicle', vehicle);
+                const newVehicle = await addVehicle(userId, vehicle);   //vehicle = raw vehicle data without mongo id
+                socket.emit('add-vehicle', newVehicle);
+                socket.to(userId).emit('add-vehicle', newVehicle);      //broadcasting to room with all users with same userId i.e. same account
             });
 
-            socket.on('vehicle-remove', vehicle => {
+            socket.on('vehicle-remove', async (vehicle) => {
                 console.log('Server: Detected Vehicle Removal');
-                delete vehicle_data[vehicle.id];    //Update data on the server for syncing with clients connected later (demo app) :: Update data on the database (real app)
+                await removeVehicle(vehicle);
                 socket.emit('remove-vehicle', vehicle);
-                socket.broadcast.emit('remove-vehicle', vehicle);
+                socket.to(vehicle.user.toString()).emit('remove-vehicle', vehicle);     //broadcasting to room with all users with same userId i.e. same account
             });
         })
     }
@@ -161,4 +71,5 @@ const port = process.env.PORT;
 
 app.listen(port, () => {
     console.log(`Server started on port: ${port}`);
+    connectToMongoDB(process.env.MONGODB_URL);
 });

@@ -11,10 +11,20 @@
 </tr>
 </table>
 
-## Getting Started
+<div align='center'><h3><a href="https://vehicle-tracking-rush1dan.vercel.app" target="_blank">View Live Demo</a></h3></div>
 
-First, run the development server:
+## About
+This is a full stack vehicle tracking/fleet management app with realtime communication and updates between multiple clients and the server. This app has been built with completely free map tools. It uses **Leaflet.js** as the map library with **Open Street Maps** for the map tiles and **Nominatim** api for Geocoding and Reverse Geocoding locations.
 
+## Dev
+
+First, run the development servers for the server and client apps:
+
+For the server app, cd into the server directory and:
+```bash
+node index.js
+```
+For the client app, cd into the client directory and:
 ```bash
 npm run dev
 # or
@@ -23,13 +33,34 @@ yarn dev
 pnpm dev
 ```
 
-****Keep the port 5000 free for the server socket.**
-
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 Duplicate the browser tab to see realtime syncing between server and multiple client instances.
 
-You can also connect from a different device on the same network providing the correct server local ip for example: http://192.168.1.10:3000.
-
 ## Demo
 [![IMAGE ALT TEXT HERE](VehicleTracking_YT.png)](https://www.youtube.com/watch?v=IUBV-C7MmDs)
+
+## Built With
+<div>
+<h4>Front End:</h4>
+
+<div>
+
+![Static Badge](https://img.shields.io/badge/Next.js-a?style=for-the-badge&logo=Next.js&color=494f63)
+![Static Badge](https://img.shields.io/badge/React-a?style=for-the-badge&logo=React&color=494f63)
+![Static Badge](https://img.shields.io/badge/Redux-a?style=for-the-badge&logo=Redux&logoColor=5200cc&color=494f63)
+![Static Badge](https://img.shields.io/badge/JavaScript-a?style=for-the-badge&logo=JavaScript&color=494f63)
+![Static Badge](https://img.shields.io/badge/TailwindCSS-a?style=for-the-badge&logo=TailwindCSS&color=494f63)
+
+</div>
+
+<h4>Back End:</h4>
+
+<div>
+
+![Static Badge](https://img.shields.io/badge/Node.js-a?style=for-the-badge&logo=Node.js&color=494f63)
+![Static Badge](https://img.shields.io/badge/Socket.io-a?style=for-the-badge&logo=Socket.io&color=494f63)
+
+</div>
+
+</div>

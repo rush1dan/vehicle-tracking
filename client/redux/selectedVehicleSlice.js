@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-	id: null
+	_id: null
 }
 
 export const selectedVehicleSlice = createSlice({
@@ -9,7 +9,7 @@ export const selectedVehicleSlice = createSlice({
 	initialState,
 	reducers: {
 		selectVehicle: (state, action) => {
-			state.id = action.payload;
+			state._id = action.payload;
 		},
 	},
 })
