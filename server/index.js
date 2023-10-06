@@ -37,6 +37,7 @@ app.get('/socket', cors(corsOptions), (req, res) => {
             socket.on('request-data', async (userId) => {
                 console.log('Server: Received Initial Data Request From User: ', userId);
                 const vehicle_data = processVehiclesListData(await getVehicles(userId));
+                socket.join(userId);    //for bradcasting to only room with the provided userId
                 socket.emit('serve-data', vehicle_data);
             });
 
@@ -44,21 +45,21 @@ app.get('/socket', cors(corsOptions), (req, res) => {
                 console.log('Server: Detected Vehicle Update');
                 const updatedVehicle = await updateVehicle(vehicle);
                 socket.emit('update-vehicle', updatedVehicle);
-                socket.broadcast.emit('update-vehicle', updatedVehicle);
+                socket.to(updatedVehicle.user.toString()).emit('update-vehicle', updatedVehicle);   //broadcasting to room with all users with same userId i.e. same account
             });
 
             socket.on('vehicle-add', async (userId, vehicle) => {
                 console.log('Server: Detected Vehicle Addition');
                 const newVehicle = await addVehicle(userId, vehicle);   //vehicle = raw vehicle data without mongo id
                 socket.emit('add-vehicle', newVehicle);
-                socket.broadcast.emit('add-vehicle', newVehicle);
+                socket.to(userId).emit('add-vehicle', newVehicle);      //broadcasting to room with all users with same userId i.e. same account
             });
 
             socket.on('vehicle-remove', async (vehicle) => {
                 console.log('Server: Detected Vehicle Removal');
                 await removeVehicle(vehicle);
                 socket.emit('remove-vehicle', vehicle);
-                socket.broadcast.emit('remove-vehicle', vehicle);
+                socket.to(vehicle.user.toString()).emit('remove-vehicle', vehicle);     //broadcasting to room with all users with same userId i.e. same account
             });
         })
     }
