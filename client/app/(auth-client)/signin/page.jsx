@@ -16,7 +16,7 @@ export default function SignInPage() {
         }
     }, [status]);
 
-    
+
     const initialData = {
         email: '',
         password: ''
@@ -24,8 +24,8 @@ export default function SignInPage() {
     const [data, setData] = useState(initialData);
     const [fetchState, setFetchState] = useState(FetchStatus.none);
     const [errorMsg, setErrorMsg] = useState('');
-    
-    
+
+
     if (status === 'authenticated') {
         return null;
     } else if (status === 'loading') {
@@ -144,6 +144,15 @@ export default function SignInPage() {
                             Register
                         </Link>
                     </p>
+
+                    <p className="mt-6 text-center text-sm text-gray-500">Or Use A Demo Account:</p>
+                    <div className="bg-gray-400/20 rounded-lg p-8 mt-4">
+                        <p className="w-full text-center">Email: demo_user@gmail.com</p>
+                        <p className="w-full text-center">Pasword: demopassword</p>
+                        <br></br>
+                        <p className="w-full text-center">Email: demo_user_100@gmail.com</p>
+                        <p className="w-full text-center">Pasword: demopassword_100</p>
+                    </div>
                 </div>
             </div>
         </div>
