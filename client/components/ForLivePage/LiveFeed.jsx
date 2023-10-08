@@ -21,7 +21,7 @@ const LiveFeed = ({ className }) => {
         <div className={className}>
             <div className='w-full h-full'>
                 <Tabs className={'w-full h-24'} allVehicleCount={allVehiclesList.length} movingVehicleCount={movingVehicles.length}
-                    idleVehicleCount={idleVehicles.length} selectedVehicleCount={selectedVehicle.id ? 1 : 0} />
+                    idleVehicleCount={idleVehicles.length} selectedVehicleCount={selectedVehicle._id ? 1 : 0} />
                 {
                     selectedTab.value !== 'Selected' &&
                     <CardList className={'w-full h-[calc(100%-6rem)]'} vehicles={vehicleList} />

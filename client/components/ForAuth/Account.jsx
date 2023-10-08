@@ -25,7 +25,7 @@ const Account = ({className}) => {
                 </div>
                 {
                     showSignOutModal &&
-                    <SignOutModal className={'absolute top-full right-0 mt-4 z-[2000]'} />
+                    <SignOutModal className={'absolute top-full right-0 mt-4 z-10'} />
                 }
             </div>
         </div>
