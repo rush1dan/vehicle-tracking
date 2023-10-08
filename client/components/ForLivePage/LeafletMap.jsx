@@ -60,7 +60,7 @@ const LeafletMap = ({ className }) => {
     }
 
     return (
-        <div className={`${className} relative -z-10`}>
+        <div className={`${className} relative`}>
             <MapContainer center={dhakaLatLang} zoom={13} scrollWheelZoom={true} className='w-full h-full'>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
