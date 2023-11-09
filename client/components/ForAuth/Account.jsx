@@ -16,6 +16,10 @@ const Account = ({className}) => {
     if (status !== 'authenticated') {
         return null;
     }
+
+    if (selectedPage.value !== 'Dashboard') {
+        return null;
+    }
     return (
         <div className={className}>
             <div className='w-full h-full'>

@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import LiveFeedCard from './LiveFeedCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectTab } from '@/redux/selectedTabSlice'
@@ -74,6 +74,14 @@ const Tab = ({ className, title, count, bgColorClass, textColorClass, selected, 
 }
 
 const CardList = ({ className, vehicles }) => {
+    const cardRef = useRef(null);
+    const selectedVehicle = useSelector((state) => state.selectedVehicle);
+
+    useEffect(() => {
+        if (cardRef.current) {
+            cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }, [cardRef?.current, selectedVehicle._id]);
     return (
         <div className={className}>
             <div className='w-full h-full px-4 md:py-4 flex flex-col items-start gap-y-4 overflow-y-auto'>
@@ -81,7 +89,7 @@ const CardList = ({ className, vehicles }) => {
                     vehicles.map((vehicle, index) => {
                         const vehicle_rev = vehicles[vehicles.length - index - 1];      //to put newly added vehicle up top with O(n)
                         return (
-                            <div key={vehicle_rev._id} className='w-full'>
+                            <div key={vehicle_rev._id} className='w-full' ref={vehicle_rev._id === selectedVehicle._id ? cardRef : undefined}>
                                 <LiveFeedCard className={'w-full h-20'} vehicle={vehicle_rev} />
                             </div>
                         )
