@@ -7,4 +7,8 @@ const processVehiclesListData = (vehicles_list) => {
     return vehicle_data;
 }
 
-module.exports = {processVehiclesListData}
+const getRandomInRange = (min, max) => {
+    return Math.random() * (max - min) + min;
+}
+
+module.exports = {processVehiclesListData, getRandomInRange}
